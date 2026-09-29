@@ -14,6 +14,18 @@ spec:
       labels:
         app: opensre-web-ui
     spec:
+      {{- with .Values.services.webUi.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.services.webUi.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.services.webUi.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if .Values.global.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.global.imagePullSecrets | indent 8 }}
@@ -39,6 +51,8 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ .Values.secrets.webUiEnv | quote }}
+                # Documented as optional; the chart sets in-cluster URLs itself.
+                optional: true
           {{- end }}
           env:
             - name: CONFIG_SERVICE_URL
