@@ -221,6 +221,10 @@ neo4j:
 
 services:
   configService:
+    # Pod scheduling (e.g. tainted node pools).
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
     enabled: true
     image: "opensre/config-service:v1.0.0"
     replicas: 1
@@ -283,6 +287,10 @@ services:
       enabled: true
   # Agent - SRE investigation agent with sandbox isolation support
   agent:
+    # Pod scheduling (e.g. tainted node pools).
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
     enabled: true
     image: "opensre/agent:v1.0.0"
     replicas: 2
@@ -697,6 +705,10 @@ services:
       minAvailable: 1
 
   webUi:
+    # Pod scheduling (e.g. tainted node pools).
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
     enabled: true
     image: "opensre/web-ui:v1.0.0"
     replicas: 2
