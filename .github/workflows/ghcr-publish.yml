@@ -1,0 +1,125 @@
+# Build images and the Helm chart from this fork into ghcr.io/apptimizer.
+#
+# Runs on pushes to the `apptimizer` branch (and manually). Every artifact is
+# keyed by the commit it was built from:
+#   images: ghcr.io/apptimizer/opensre-<svc>:<appVersion>-<shortsha>
+#   chart:  oci://ghcr.io/apptimizer/charts/opensre:<version>-apptimizer.g<shortsha>
+#
+# The upstream docker-publish.yml (Docker Hub, v* tags) is left untouched.
+# Packages stay private; consumers pull with a ghcr read token.
+
+name: Publish to ghcr (apptimizer)
+
+on:
+  push:
+    branches: [apptimizer]
+    paths:
+      - "charts/opensre/**"
+      - "config_service/**"
+      - "sre-agent/**"
+      - "web_ui/**"
+      - ".github/workflows/ghcr-publish.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  NAMESPACE: apptimizer
+
+jobs:
+  meta:
+    runs-on: ubuntu-latest
+    outputs:
+      short: ${{ steps.meta.outputs.short }}
+      app_version: ${{ steps.meta.outputs.app_version }}
+      chart_version: ${{ steps.meta.outputs.chart_version }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: meta
+        run: |
+          short="$(git rev-parse --short=7 HEAD)"
+          app="$(awk -F'"' '/^appVersion:/ {print $2}' charts/opensre/Chart.yaml)"
+          ver="$(awk '/^version:/ {print $2}' charts/opensre/Chart.yaml)"
+          echo "short=$short" >> "$GITHUB_OUTPUT"
+          echo "app_version=${app}-${short}" >> "$GITHUB_OUTPUT"
+          # The g prefix keeps the prerelease identifier alphanumeric (semver).
+          echo "chart_version=${ver}-apptimizer.g${short}" >> "$GITHUB_OUTPUT"
+
+  images:
+    needs: meta
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - context: config_service
+            image: opensre-config-service
+          - context: sre-agent
+            image: opensre-sre-agent
+          - context: web_ui
+            image: opensre-web-ui
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          sudo docker image prune --all --force
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: ./${{ matrix.context }}
+          file: ./${{ matrix.context }}/Dockerfile
+          platforms: linux/amd64
+          push: true
+          build-args: |
+            OPENSRE_VERSION=${{ needs.meta.outputs.app_version }}
+            OPENSRE_GIT_SHA=${{ needs.meta.outputs.short }}
+          tags: ${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ matrix.image }}:${{ needs.meta.outputs.app_version }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+          cache-from: type=gha,scope=${{ matrix.image }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.image }}
+
+      - name: Summary
+        run: |
+          echo "- \`${{ env.REGISTRY }}/${{ env.NAMESPACE }}/${{ matrix.image }}:${{ needs.meta.outputs.app_version }}\` → \`${{ steps.build.outputs.digest }}\`" >> "$GITHUB_STEP_SUMMARY"
+
+  chart:
+    needs: [meta, images]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/setup-helm@v4
+        with:
+          version: v3.17.1
+
+      - name: Package
+        run: |
+          helm repo add neo4j https://helm.neo4j.com/neo4j
+          helm dependency build charts/opensre
+          helm package charts/opensre \
+            --version "${{ needs.meta.outputs.chart_version }}" \
+            --app-version "${{ needs.meta.outputs.app_version }}" \
+            --destination dist
+
+      - name: Push
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login "${REGISTRY}" -u "${{ github.actor }}" --password-stdin
+          helm push dist/opensre-${{ needs.meta.outputs.chart_version }}.tgz "oci://${REGISTRY}/${NAMESPACE}/charts"
+          echo "- chart \`oci://${REGISTRY}/${NAMESPACE}/charts/opensre:${{ needs.meta.outputs.chart_version }}\`" >> "$GITHUB_STEP_SUMMARY"
