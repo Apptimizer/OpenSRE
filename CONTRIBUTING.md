@@ -89,7 +89,7 @@ Optional:
 
 ```bash
 # Stop the Docker web-ui container first, then:
-cd web_ui && pnpm install && pnpm dev
+cd web_ui && npm ci && npm run dev
 # Point at Docker backends on :8081 / :8001
 ```
 
@@ -97,7 +97,7 @@ cd web_ui && pnpm install && pnpm dev
 
 ```bash
 pytest                          # Backend tests
-cd web_ui && pnpm test         # Frontend tests
+cd web_ui && npm test          # Frontend tests
 ```
 
 See the [Architecture docs](https://www.opensre.in/docs/architecture) for detailed architecture and development guide.

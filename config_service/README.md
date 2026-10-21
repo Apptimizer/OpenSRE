@@ -38,6 +38,8 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+`requirements.txt` includes `requirements.runtime.txt` (used by the production Docker image) plus local dev/CLI tools.
+
 ### 2) Pull DB secret to `.env`
 
 ```bash
