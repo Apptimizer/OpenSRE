@@ -17,7 +17,7 @@ config-service <- used by web_ui, sre-agent
 
 **sre-agent** is the core investigation agent. Uses the Claude Agent SDK: a root `investigator` agent dispatches specialist subagents via the SDK `Task` tool. 51 skills (progressive knowledge loading) via the SDK Skill tool.
 
-**web_ui** is the admin console and agent entry point (Next.js, pnpm). Agent runs, config editor, knowledge base explorer, memory pages.
+**web_ui** is the admin console and agent entry point (Next.js, npm). Agent runs, config editor, knowledge base explorer, memory pages.
 
 **config-service** is the control plane. Hierarchical org->team config with deep merge. Manages tokens and audit logging.
 
@@ -68,7 +68,7 @@ Optional chat bots:
 ## Conventions
 
 - Python services use `uv` (sre-agent, config-service)
-- web_ui is Next.js with pnpm
+- web_ui is Next.js with npm (`package-lock.json`)
 - Linting: ruff (config in ruff.toml)
 - Skills over tools: add integrations as `.claude/skills/*/SKILL.md` with scripts
 - Config hierarchy: org base, team overrides. Dicts merge, lists replace.

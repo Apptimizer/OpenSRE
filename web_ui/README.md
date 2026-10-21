@@ -73,13 +73,13 @@ Example:
 ## Local development
 
 Prereqs:
-- Node.js (use `pnpm` recommended since `pnpm-lock.yaml` is committed)
+- Node.js 20+ with npm (lockfile: `package-lock.json`, same as the production Docker image)
 
 Run:
 
 ```bash
-pnpm install
-pnpm dev
+npm ci
+npm run dev
 ```
 
 Open:
