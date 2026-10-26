@@ -8,7 +8,7 @@ export default function MemoryLayout({ children }: { children: React.ReactNode }
     <TeamPageShell
       header={
         <PageHeader
-          eyebrow="Team console"
+          eyebrow="Memory"
           title="Memory"
           subtitle="Learn from past investigations to improve future ones"
         />

@@ -197,7 +197,7 @@ export default function TeamContextPage() {
     <TeamPageShell
       header={
         <PageHeader
-          eyebrow="Team console"
+          eyebrow="Team Context"
           title="Context"
           subtitle="Operating facts injected into every investigation's system prompt"
           actions={

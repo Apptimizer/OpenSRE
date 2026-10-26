@@ -1004,7 +1004,7 @@ export default function TeamToolsPage() {
       header={
         <>
           <PageHeader
-            eyebrow="Team console"
+            eyebrow="Tools & MCPs"
             title="Tools"
             subtitle="Integrations, MCP servers, and skills available to your AI agents"
             actions={

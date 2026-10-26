@@ -553,7 +553,7 @@ export default function AgentSettingsPage() {
       header={
         <>
         <PageHeader
-          eyebrow="Team console"
+          eyebrow="Agent Topology"
           title="Agents"
           subtitle="Configure your multi-agent system topology, prompts, and behaviors"
           actions={

@@ -436,7 +436,7 @@ export default function TeamKnowledgePage() {
       header={
         <>
           <PageHeader
-            eyebrow="Team console"
+            eyebrow="Knowledge Base"
             title="Knowledge"
             subtitle="Team docs and RAPTOR knowledge trees for semantic search and Q&A"
             actions={headerActions}

@@ -179,7 +179,7 @@ export default function TemplatesPage() {
   return (
     <div className="p-8 max-w-6xl mx-auto">
       <PageHeader
-        eyebrow="Team console"
+        eyebrow="Agent Topology"
         title="Templates"
         subtitle="Pre-configured agent systems optimized for specific use cases"
       />

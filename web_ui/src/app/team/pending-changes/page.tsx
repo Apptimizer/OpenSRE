@@ -230,7 +230,7 @@ export default function TeamPendingChangesPage() {
 
   const pageHeader = (
     <PageHeader
-      eyebrow="Team console"
+      eyebrow="Proposed Changes"
       title="Proposed Changes"
       subtitle="Review and approve AI-proposed changes to your team's configuration."
       actions={
