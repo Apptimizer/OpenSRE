@@ -44,7 +44,7 @@ export function TopBar({ sidebarWidth }: Props) {
           </span>
           <Button
             variant="primary"
-            className="ml-auto"
+            className="ml-auto whitespace-nowrap"
             onClick={open}
             title="New Investigation (⌘I)"
           >
