@@ -235,13 +235,13 @@ export default function TemplatesPage() {
               placeholder="Search templates..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-slate-200/70 rounded-full bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500"
+              className="w-full pl-10 pr-4 py-2 border border-slate-200/70 dark:border-slate-600 rounded-full bg-white dark:bg-slate-800 text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500"
             />
           </div>
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="px-4 py-2 border border-slate-200/70 rounded-full bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500"
+            className="px-4 py-2 border border-slate-200/70 dark:border-slate-600 rounded-full bg-white dark:bg-slate-800 text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500"
           >
             {CATEGORIES.map((cat) => (
               <option key={cat.value} value={cat.value}>

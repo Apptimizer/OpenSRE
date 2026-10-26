@@ -68,8 +68,8 @@ export function InvestigationsPager({
 
 function pagerButtonClass(disabled: boolean): string {
   return clsx(
-    'px-3 py-1.5 text-sm rounded-lg border border-slate-200/80 bg-white text-slate-700',
+    'px-3 py-1.5 text-sm rounded-lg border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-700',
     'hover:bg-slate-50 transition-colors',
-    disabled && 'opacity-40 cursor-not-allowed hover:bg-white',
+    disabled && 'opacity-40 cursor-not-allowed hover:bg-white dark:hover:bg-slate-800',
   );
 }

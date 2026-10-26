@@ -67,7 +67,7 @@ const cardClass =
   'bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden';
 
 const ghostBtnClass =
-  'inline-flex items-center gap-2 h-9 px-3.5 rounded-full text-[13.5px] font-medium border border-slate-200/70 bg-white text-slate-900 hover:bg-slate-50 transition';
+  'inline-flex items-center gap-2 h-9 px-3.5 rounded-full text-[13.5px] font-medium border border-slate-200/70 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 hover:bg-slate-50 transition';
 
 export default function TeamContextPage() {
   const { identity } = useIdentity();

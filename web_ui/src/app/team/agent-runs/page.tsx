@@ -459,7 +459,7 @@ export default function TeamAgentRunsPage() {
                 placeholder="Search investigations..."
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-slate-200/70 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400/50"
+                className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-slate-200/70 dark:border-slate-600 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-400/50"
               />
             </div>
 

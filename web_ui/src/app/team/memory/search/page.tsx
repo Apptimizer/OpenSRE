@@ -35,7 +35,7 @@ const NEUTRAL_CHIP =
   'inline-flex items-center h-6 px-2.5 rounded-full text-[11px] font-medium bg-slate-50 text-slate-600 border border-slate-200/80';
 
 const inputClass =
-  'w-full border border-slate-200/70 rounded-xl bg-white text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-300';
+  'w-full border border-slate-200/70 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-800 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-300';
 
 function ResolutionPill({ resolved }: { resolved: boolean }) {
   return (
@@ -112,7 +112,7 @@ export default function MemorySearchPage() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <div className="rounded-2xl bg-white border border-slate-200/70 p-6">
+      <div className="rounded-2xl bg-white dark:bg-slate-800 border border-slate-200/70 dark:border-slate-600 p-6">
         <div className="space-y-5">
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -217,7 +217,7 @@ export default function MemorySearchPage() {
               return (
                 <div
                   key={r.episode_id}
-                  className={`rounded-[1.5rem] bg-white border border-slate-200/70 p-5 shadow-[0_12px_30px_-12px_rgba(15,23,42,0.06)] ${listRowHoverClass}`}
+                  className={`rounded-[1.5rem] bg-white dark:bg-slate-800 border border-slate-200/70 dark:border-slate-600 p-5 shadow-[0_12px_30px_-12px_rgba(15,23,42,0.06)] ${listRowHoverClass}`}
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
                     <span className="text-2xl font-semibold text-emerald-600 font-mono tabular-nums">

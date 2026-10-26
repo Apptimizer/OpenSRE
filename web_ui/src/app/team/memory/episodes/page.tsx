@@ -399,7 +399,7 @@ export default function EpisodesPage() {
             placeholder="Search episodes…"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200/70 bg-white text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-300"
+            className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200/70 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-300"
           />
         </div>
 

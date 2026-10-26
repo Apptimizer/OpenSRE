@@ -46,7 +46,7 @@ export function NewInvestigationDrawer({ open, onClose, onComplete }: Props) {
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
       <div className="absolute inset-0 bg-slate-900/20" onClick={closeChat} />
-      <div className="relative flex h-full w-full max-w-2xl flex-col bg-white shadow-2xl">
+      <div className="relative flex h-full w-full max-w-2xl flex-col bg-white dark:bg-slate-800 shadow-2xl">
         <div className="flex items-center justify-between border-b border-slate-200/70 px-6 py-4">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100/55">

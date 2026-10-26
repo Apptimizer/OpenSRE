@@ -558,13 +558,13 @@ export default function AgentSettingsPage() {
           subtitle="Configure your multi-agent system topology, prompts, and behaviors"
           actions={
             <>
-              <div className="flex items-center bg-slate-100 rounded-full p-1">
+              <div className="flex items-center bg-slate-100 dark:bg-slate-900 rounded-full p-1">
                 <button
                   type="button"
                   onClick={() => setViewMode('visual')}
                   className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm transition-all ${
                     viewMode === 'visual'
-                      ? 'bg-white text-slate-900 shadow-sm'
+                      ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-white'
                       : 'text-slate-500 hover:text-slate-700'
                   }`}
                 >
@@ -576,7 +576,7 @@ export default function AgentSettingsPage() {
                   onClick={() => setViewMode('json')}
                   className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm transition-all ${
                     viewMode === 'json'
-                      ? 'bg-white text-slate-900 shadow-sm'
+                      ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-white'
                       : 'text-slate-500 hover:text-slate-700'
                   }`}
                 >
@@ -603,7 +603,7 @@ export default function AgentSettingsPage() {
                 </Button>
 
                 {showAgentTypeMenu && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-slate-200/70 z-50">
+                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200/70 dark:border-slate-600 z-50">
                     <button
                       type="button"
                       onClick={() => {
@@ -776,7 +776,7 @@ export default function AgentSettingsPage() {
 
           {/* Zoomable Canvas */}
           <div
-            className="relative min-h-[calc(100vh-200px)] overflow-hidden rounded-[1.5rem] border border-slate-200/70 bg-white"
+            className="relative min-h-[calc(100vh-200px)] overflow-hidden rounded-[1.5rem] border border-slate-200/70 dark:border-slate-600 bg-white dark:bg-slate-800"
             onWheel={handleWheel}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}

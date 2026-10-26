@@ -20,10 +20,10 @@ interface Strategy {
 }
 
 const inputClass =
-  'w-full h-9 px-3 text-sm rounded-xl border border-slate-200/70 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-300';
+  'w-full h-9 px-3 text-sm rounded-xl border border-slate-200/70 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-300';
 
 const textareaClass =
-  'w-full px-3 py-2 text-sm rounded-xl border border-slate-200/70 bg-white text-slate-900 font-mono leading-relaxed focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-300';
+  'w-full px-3 py-2 text-sm rounded-xl border border-slate-200/70 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 font-mono leading-relaxed focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-300';
 
 const NEUTRAL_CHIP =
   'inline-flex items-center h-6 px-2.5 rounded-full text-[11px] font-medium bg-slate-50 text-slate-600 border border-slate-200/80';
@@ -342,7 +342,7 @@ export default function StrategiesPage() {
                     return (
                       <div
                         key={strategy.strategy_id}
-                        className={`rounded-[1.5rem] bg-white border border-slate-200/70 shadow-[0_12px_30px_-12px_rgba(15,23,42,0.06)] overflow-hidden ${listRowHoverClass}`}
+                        className={`rounded-[1.5rem] bg-white dark:bg-slate-800 border border-slate-200/70 dark:border-slate-600 shadow-[0_12px_30px_-12px_rgba(15,23,42,0.06)] overflow-hidden ${listRowHoverClass}`}
                       >
                         <div className="flex items-center gap-2 p-4">
                           <button

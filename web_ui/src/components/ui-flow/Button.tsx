@@ -27,7 +27,7 @@ export function Button({
     <button
       {...props}
       className={clsx(
-        'inline-flex items-center gap-2 h-10 px-4 rounded-xl text-sm font-bold transition-colors duration-[120ms] ease-[var(--apl-ease)] focus-visible:outline-none focus-visible:shadow-[inset_0_0_0_2px_var(--apl-neutral-600)] disabled:bg-slate-100 disabled:text-slate-300 disabled:shadow-none',
+        'inline-flex items-center gap-2 h-10 px-4 rounded-xl text-sm font-bold transition-colors duration-[120ms] ease-[var(--apl-ease)] focus-visible:outline-none focus-visible:shadow-[inset_0_0_0_2px_var(--apl-neutral-600)] disabled:bg-slate-100 disabled:text-slate-300 disabled:shadow-none dark:disabled:bg-slate-700 dark:disabled:text-slate-500',
         VARIANT[variant],
         className,
       )}

@@ -374,7 +374,7 @@ export default function MemoryPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search past investigations…"
-                className="w-full h-11 pl-10 pr-4 rounded-full border border-slate-200/80 bg-white text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-300"
+                className="w-full h-11 pl-10 pr-4 rounded-full border border-slate-200/80 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-300"
               />
             </form>
             <p className="mt-2 text-xs text-slate-400">Opens the Search tab with your query</p>
@@ -388,7 +388,7 @@ export default function MemoryPage() {
           <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500 mb-4">
             Pattern activity · 14d
           </div>
-          <div className="rounded-[2.5rem] border border-slate-200/70 p-6 overflow-hidden relative bg-white">
+          <div className="rounded-[2.5rem] border border-slate-200/70 dark:border-slate-600 p-6 overflow-hidden relative bg-white dark:bg-slate-800">
             {data.issue_type_counts.length === 0 ? (
               <p className="text-sm text-slate-500">No pattern activity yet.</p>
             ) : (

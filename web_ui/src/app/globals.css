@@ -166,6 +166,49 @@
   --color-accent-deep: var(--apl-secondary-600);
 }
 
+/*
+ * shortcut: dark-mode text lift. Many pages set light-mode text classes with no dark: variant, and the
+ * remap above keeps them dark on dark surfaces. Text-colour classes (never bg) are lifted to legible
+ * applift steps here; delete this block once pages carry their own dark text classes.
+ */
+.dark :is(.text-slate-950, .text-slate-900, .text-slate-800, .text-slate-700,
+          .text-stone-950, .text-stone-900, .text-stone-800, .text-stone-700,
+          .hover\:text-slate-900:hover, .hover\:text-slate-800:hover, .hover\:text-slate-700:hover,
+          .hover\:text-stone-900:hover, .hover\:text-stone-800:hover, .hover\:text-stone-700:hover) {
+  color: var(--apl-neutral-200);
+}
+.dark :is(.text-slate-600, .text-stone-600, .hover\:text-slate-600:hover, .hover\:text-stone-600:hover) {
+  color: var(--apl-neutral-300);
+}
+.dark :is(.text-slate-500, .text-slate-400, .text-stone-500, .text-stone-400,
+          .dark\:text-slate-500, .dark\:text-slate-400, .dark\:text-stone-500, .dark\:text-stone-400) {
+  color: var(--apl-neutral-400);
+}
+.dark :is(.text-emerald-400, .text-emerald-500, .text-emerald-600, .text-emerald-700, .text-emerald-800,
+          .text-forest, .text-forest-dark, .text-forest-light, .dark\:text-forest-light,
+          .text-accent, .text-accent-deep, .hover\:text-emerald-700:hover, .hover\:text-emerald-800:hover):not(:disabled) {
+  color: var(--apl-secondary-300);
+}
+.dark :is(.text-amber-600, .text-amber-700, .text-amber-800, .text-yellow-600, .text-yellow-700) {
+  color: var(--apl-alert-400);
+}
+.dark :is(.text-rose-600, .text-rose-700, .text-rose-800, .text-red-600, .text-red-700, .text-red-800, .text-clay) {
+  color: var(--apl-error-300);
+}
+.dark :is(.text-green-600, .text-green-700, .text-green-800) {
+  color: var(--apl-success-400);
+}
+/* Light neutral tints with no dark:bg- of their own become a faint lift on the dark surface. */
+.dark :is(.bg-slate-50, .bg-stone-50, [class*="bg-slate-50/"], [class*="bg-stone-50/"]):not([class*="dark:bg-"]) {
+  background-color: color-mix(in srgb, var(--apl-neutral-100) 4%, transparent);
+}
+.dark :is(.bg-slate-100, .bg-stone-100, [class*="bg-slate-100/"], [class*="bg-stone-100/"]):not([class*="dark:bg-"]) {
+  background-color: color-mix(in srgb, var(--apl-neutral-100) 8%, transparent);
+}
+.dark :is(.hover\:bg-slate-50, .hover\:bg-stone-50, .hover\:bg-slate-100, .hover\:bg-stone-100):hover:not([class*="dark:hover:bg-"]) {
+  background-color: color-mix(in srgb, var(--apl-neutral-100) 8%, transparent);
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
