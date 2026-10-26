@@ -1033,11 +1033,11 @@ export default function TeamToolsPage() {
       <div className="space-y-6">
         {/* Summary Strip */}
         <div className="flex flex-wrap gap-3">
-          <span className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full text-xs font-medium bg-emerald-100/55 text-emerald-700">
+          <span className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full text-xs font-medium bg-emerald-100/55 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">
             <Server className="w-3.5 h-3.5" />
             {customServers.length} MCP Servers
           </span>
-          <span className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full text-xs font-medium bg-white border border-slate-200/70 text-slate-600">
+          <span className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full text-xs font-medium bg-white border border-slate-200/70 text-slate-600 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-300">
             <BookOpen className="w-3.5 h-3.5" />
             {skillsCatalog.length} Skills
           </span>
@@ -1047,10 +1047,10 @@ export default function TeamToolsPage() {
         <div className="mb-6">
           <input
             type="text"
-            placeholder="Search integrations, tools, and skills..."
+            placeholder="Search integrations, tools, and skills…"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full px-4 py-2 bg-white border border-slate-200/70 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500/50"
+            className="w-full px-4 py-2 bg-white border border-slate-200/70 rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500/50"
           />
         </div>
 
