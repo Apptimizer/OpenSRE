@@ -416,7 +416,7 @@ export default function TokenManagementPage() {
                           setSelectedTokens(new Set());
                         }
                       }}
-                      className="rounded border-stone-300 text-[#3D7B5F] focus:ring-forest"
+                      className="rounded border-stone-300 text-forest focus:ring-forest"
                     />
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-stone-500 uppercase tracking-wider">Token ID</th>
@@ -451,7 +451,7 @@ export default function TokenManagementPage() {
                             }
                             setSelectedTokens(newSelected);
                           }}
-                          className="rounded border-stone-300 text-[#3D7B5F] focus:ring-forest"
+                          className="rounded border-stone-300 text-forest focus:ring-forest"
                         />
                       </td>
                       <td className="px-4 py-3">
@@ -460,7 +460,7 @@ export default function TokenManagementPage() {
                             setSelectedToken(token);
                             setTokenDetailsModalOpen(true);
                           }}
-                          className="font-mono text-sm text-[#3D7B5F] hover:text-[#2D5B47] hover:underline"
+                          className="font-mono text-sm text-forest hover:text-forest-dark hover:underline"
                         >
                           {token.token_id}
                         </button>
@@ -523,7 +523,7 @@ export default function TokenManagementPage() {
                             type="radio"
                             checked={issueExpiryDays === days}
                             onChange={() => setIssueExpiryDays(days as number)}
-                            className="text-[#3D7B5F] focus:ring-forest"
+                            className="text-forest focus:ring-forest"
                           />
                           <span className="text-sm text-stone-900 dark:text-stone-100">
                             {days ? `${days} days${days === 90 ? ' (recommended)' : ''}` : 'Never expire (not recommended)'}
@@ -577,7 +577,7 @@ export default function TokenManagementPage() {
                         type="checkbox"
                         checked={tokenSavedConfirmed}
                         onChange={(e) => setTokenSavedConfirmed(e.target.checked)}
-                        className="rounded border-stone-300 text-[#3D7B5F] focus:ring-forest"
+                        className="rounded border-stone-300 text-forest focus:ring-forest"
                       />
                       <span className="text-sm text-stone-700 dark:text-stone-300">I have saved this token securely</span>
                     </label>
@@ -653,7 +653,7 @@ export default function TokenManagementPage() {
                   </button>
                   {!selectedToken.revoked_at && (
                     <>
-                      <button className="px-4 py-2 text-sm font-medium text-[#3D7B5F] bg-forest-light/15 dark:bg-forest/20 rounded-lg hover:bg-forest-light/20">
+                      <button className="px-4 py-2 text-sm font-medium text-forest bg-forest-light/15 dark:bg-forest/20 rounded-lg hover:bg-forest-light/20">
                         Extend Expiry
                       </button>
                       <button

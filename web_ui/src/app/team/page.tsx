@@ -255,33 +255,25 @@ export default function TeamDashboardPage() {
           </div>
         </div>
 
-        {/* Ops pulse stats — big In flight tile + 3 border-t details */}
-        <section className="grid grid-cols-12 gap-8">
+        {/* Ops pulse stats — big In flight tile + 3 KPI cards */}
+        <section className="grid grid-cols-12 gap-6">
           <div className="col-span-12 md:col-span-5">
             <div
-              className="relative overflow-hidden rounded-[2rem] border border-slate-200/70 p-6 shadow-[0_20px_40px_-15px_rgba(15,23,42,0.05)] flex flex-col min-h-[272px]"
-              style={{
-                background: 'linear-gradient(170deg, rgb(209 250 229 / 0.55), white 75%)',
-              }}
+              className="relative overflow-hidden rounded-2xl bg-white p-6 flex flex-col min-h-[272px] shadow-[inset_0_0_0_1px_var(--apl-neutral-200)] dark:bg-slate-800 dark:shadow-[inset_0_0_0_1px_var(--apl-neutral-600)]"
             >
-              <div
-                className="absolute -top-8 -right-8 w-36 h-36 rounded-full breath pointer-events-none"
-                style={{ backgroundColor: 'rgb(16 185 129 / 0.12)', filter: 'blur(40px)' }}
-                aria-hidden
-              />
               <div className="relative flex-1 flex flex-col">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] uppercase tracking-[0.22em] text-slate-500">
+                  <span className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500">
                     In flight
                   </span>
                   {liveInvestigationCount > 0 && (
-                    <span className="inline-flex items-center h-7 px-3 rounded-full text-xs font-medium bg-emerald-100/70 text-emerald-800 border border-emerald-200/80">
+                    <span className="inline-flex items-center h-7 px-3 rounded-full text-xs font-medium bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-300">
                       Active
                     </span>
                   )}
                 </div>
                 <div className="mt-4 flex items-baseline gap-2.5">
-                  <span className="text-6xl font-medium tracking-tighter text-emerald-800 font-mono tabular-nums leading-none">
+                  <span className="text-6xl font-semibold tracking-[-0.04em] text-slate-700 dark:text-white font-mono tabular-nums leading-none">
                     {liveInvestigationCount}
                   </span>
                   {(stats?.runsThisWeek ?? 0) > 0 && (
@@ -318,28 +310,28 @@ export default function TeamDashboardPage() {
               </div>
             </div>
           </div>
-          <div className="col-span-12 md:col-span-7 grid grid-cols-3 gap-x-10 px-2">
-            <div className="border-t border-slate-200 pt-6">
-              <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">
+          <div className="col-span-12 md:col-span-7 grid grid-cols-3 gap-6">
+            <div className="rounded-2xl bg-white p-6 shadow-[inset_0_0_0_1px_var(--apl-neutral-200)] dark:bg-slate-800 dark:shadow-[inset_0_0_0_1px_var(--apl-neutral-600)]">
+              <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500">
                 Total investigations
               </div>
-              <div className="mt-4 text-4xl font-medium tracking-tight font-mono tabular-nums text-slate-900">
+              <div className="mt-3 text-[28px] leading-8 font-semibold tracking-[-0.02em] font-mono tabular-nums text-slate-700 dark:text-white">
                 {stats?.totalInvestigations ?? stats?.totalRuns ?? 0}
               </div>
             </div>
-            <div className="border-t border-slate-200 pt-6">
-              <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">
+            <div className="rounded-2xl bg-white p-6 shadow-[inset_0_0_0_1px_var(--apl-neutral-200)] dark:bg-slate-800 dark:shadow-[inset_0_0_0_1px_var(--apl-neutral-600)]">
+              <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500">
                 Run success
               </div>
-              <div className="mt-4 text-4xl font-medium tracking-tight font-mono tabular-nums text-slate-900">
+              <div className="mt-3 text-[28px] leading-8 font-semibold tracking-[-0.02em] font-mono tabular-nums text-slate-700 dark:text-white">
                 {stats?.successRate ?? 0}%
               </div>
             </div>
-            <div className="border-t border-slate-200 pt-6">
-              <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">
+            <div className="rounded-2xl bg-white p-6 shadow-[inset_0_0_0_1px_var(--apl-neutral-200)] dark:bg-slate-800 dark:shadow-[inset_0_0_0_1px_var(--apl-neutral-600)]">
+              <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500">
                 Avg run MTTD
               </div>
-              <div className="mt-4 text-4xl font-medium tracking-tight font-mono tabular-nums text-slate-900">
+              <div className="mt-3 text-[28px] leading-8 font-semibold tracking-[-0.02em] font-mono tabular-nums text-slate-700 dark:text-white">
                 {formatMttd(stats?.avgMttdSeconds)}
               </div>
             </div>
@@ -350,7 +342,7 @@ export default function TeamDashboardPage() {
           <section className="lg:col-span-2">
             <Panel className="flex flex-col max-h-[540px]">
               <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between shrink-0">
-                <h2 className="text-lg font-medium tracking-tight text-slate-900">Recent Activity</h2>
+                <h2 className="text-base font-bold text-slate-700 dark:text-white">Recent Activity</h2>
                 <button
                   type="button"
                   onClick={handleRefresh}
@@ -407,7 +399,7 @@ export default function TeamDashboardPage() {
               <div className="px-5 py-3 border-t border-slate-100 shrink-0">
                 <Link
                   href="/team/agent-runs"
-                  className="text-sm text-emerald-700 font-medium hover:underline"
+                  className="text-[13px] text-emerald-600 font-semibold hover:underline"
                 >
                   All investigations →
                 </Link>
@@ -418,7 +410,7 @@ export default function TeamDashboardPage() {
           <div className="flex flex-col gap-4">
             <Panel>
               <div className="px-4 py-3.5 border-b border-slate-100 flex items-center justify-between">
-                <h2 className="text-lg font-medium tracking-tight text-slate-900">Pending Items</h2>
+                <h2 className="text-base font-bold text-slate-700 dark:text-white">Pending Items</h2>
                 {totalPending > 0 && (
                   <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600 font-mono tabular-nums">
                     {totalPending}
@@ -466,7 +458,7 @@ export default function TeamDashboardPage() {
 
             <Panel>
               <div className="px-4 py-3.5 border-b border-slate-100">
-                <h2 className="text-lg font-medium tracking-tight text-slate-900">Quick Actions</h2>
+                <h2 className="text-base font-bold text-slate-700 dark:text-white">Quick Actions</h2>
               </div>
               <div className="p-4 space-y-2">
                 <Link

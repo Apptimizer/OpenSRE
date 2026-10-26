@@ -443,7 +443,7 @@ export default function TemplatesPage() {
                 Cancel
               </Button>
               <Button
-                variant="primary"
+                variant="soft"
                 onClick={() => handleApply(selectedTemplate.id)}
                 disabled={applying}
               >

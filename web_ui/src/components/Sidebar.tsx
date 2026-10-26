@@ -80,12 +80,12 @@ export function Sidebar() {
 
       {/* Sidebar Container */}
       <div className={clsx(
-        "fixed inset-y-0 left-0 z-40 w-64 bg-stone-900 border-r border-stone-800 transform transition-transform duration-200 ease-in-out lg:translate-x-0",
+        "fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-[inset_-1px_0_0_var(--apl-neutral-300)] dark:bg-stone-800 dark:shadow-[inset_-1px_0_0_var(--apl-neutral-600)] transform transition-transform duration-200 ease-[var(--apl-ease)] lg:translate-x-0",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         <div className="flex flex-col h-full">
           {/* Logo Area */}
-          <div className="h-32 flex items-center px-6 border-b border-stone-800">
+          <div className="h-16 flex items-center px-6 shadow-[inset_0_-1px_0_var(--apl-neutral-300)] dark:shadow-[inset_0_-1px_0_var(--apl-neutral-600)]">
             <LogoFull />
           </div>
 
@@ -98,13 +98,13 @@ export function Sidebar() {
                   key={item.name}
                   href={item.href}
                   className={clsx(
-                    "flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors group",
+                    "flex items-center h-10 px-3 text-sm rounded-lg transition-colors group",
                     isActive
-                      ? "bg-forest text-white"
-                      : "text-stone-400 hover:bg-white/5"
+                      ? "bg-emerald-100 text-emerald-600 font-semibold dark:bg-emerald-500/20 dark:text-emerald-300"
+                      : "text-stone-500 font-medium hover:bg-stone-100 hover:text-stone-800 dark:text-stone-400 dark:hover:bg-stone-600 dark:hover:text-white"
                   )}
                 >
-                  <item.icon className={clsx("w-5 h-5 mr-3 transition-colors", isActive ? "text-white" : "text-stone-500 group-hover:text-stone-400")} />
+                  <item.icon className={clsx("w-5 h-5 mr-3 transition-colors", isActive ? "text-current" : "text-stone-400 group-hover:text-current")} />
                   {item.name}
                 </Link>
               );
@@ -112,7 +112,7 @@ export function Sidebar() {
           </nav>
 
           {/* User / Footer */}
-          <div className="p-4 border-t border-stone-800">
+          <div className="p-4 shadow-[inset_0_1px_0_var(--apl-neutral-300)] dark:shadow-[inset_0_1px_0_var(--apl-neutral-600)]">
             <AccountMenu />
           </div>
         </div>

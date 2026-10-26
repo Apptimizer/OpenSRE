@@ -34,12 +34,12 @@ export function AccountMenu() {
     <div className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between gap-2 px-2 py-2 rounded-lg hover:bg-white/5 transition-colors"
+        className="w-full flex items-center justify-between gap-2 px-2 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors"
       >
         <div className="min-w-0 text-left">
           {hasPersona && (
             <div
-              className="text-sm font-semibold text-white truncate"
+              className="text-sm font-semibold text-slate-700 dark:text-white truncate"
               title={identity?.name ? (identity.email ?? undefined) : undefined}
             >
               {identity?.name || identity?.email}
@@ -52,7 +52,7 @@ export function AccountMenu() {
       {open && (
         <>
           <div className="fixed inset-0 z-30" onClick={() => setOpen(false)} />
-          <div className="absolute bottom-12 left-0 z-40 w-60 bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl shadow-xl overflow-hidden">
+          <div className="absolute bottom-12 left-0 z-40 w-60 bg-white dark:bg-stone-800 shadow-[inset_0_0_0_1px_var(--apl-neutral-300),var(--apl-shadow-panel)] dark:shadow-[inset_0_0_0_1px_var(--apl-neutral-600),var(--apl-shadow-panel)] rounded-xl overflow-hidden">
             {hasPersona && (
               <div className="px-3 pt-3 pb-2 border-b border-stone-200 dark:border-stone-700">
                 {showNameInPopover && (

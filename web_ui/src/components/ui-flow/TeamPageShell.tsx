@@ -32,7 +32,7 @@ export function TeamPageShell({
           <div className={TEAM_PAGE_COLUMN}>{children}</div>
         </div>
         {footer ? (
-          <div className="shrink-0 border-t border-slate-200/60 bg-white/80 backdrop-blur dark:bg-stone-900/80 dark:border-stone-700">
+          <div className="shrink-0 bg-background shadow-[inset_0_1px_0_var(--apl-neutral-300)] dark:shadow-[inset_0_1px_0_var(--apl-neutral-600)]">
             <div className={TEAM_PAGE_COLUMN}>{footer}</div>
           </div>
         ) : null}
@@ -45,7 +45,7 @@ export function TeamPageShell({
     return (
       <div className={clsx('flex flex-col min-h-[calc(100dvh-57px)]', className)}>
         {header ? (
-          <div className="shrink-0 border-b border-slate-200/70 bg-white dark:bg-slate-900">
+          <div className="shrink-0 bg-white shadow-[inset_0_-1px_0_var(--apl-neutral-300)] dark:bg-slate-800 dark:shadow-[inset_0_-1px_0_var(--apl-neutral-600)]">
             <div className={clsx(TEAM_PAGE_COLUMN, 'pt-10 pb-6 space-y-6')}>{header}</div>
           </div>
         ) : null}

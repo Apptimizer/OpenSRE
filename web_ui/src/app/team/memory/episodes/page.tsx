@@ -47,7 +47,7 @@ const NEUTRAL_CHIP =
 
 function FilterSectionLabel({ children }: { children: ReactNode }) {
   return (
-    <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-3">{children}</div>
+    <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500 mb-3">{children}</div>
   );
 }
 
@@ -275,8 +275,8 @@ export default function EpisodesPage() {
         <Skeleton className="col-span-12 lg:col-span-3 h-64 rounded-xl" />
         <div className="col-span-12 lg:col-span-9 space-y-4">
           <Skeleton className="h-11 w-full rounded-xl" />
-          <Skeleton className="h-48 w-full rounded-[2rem]" />
-          <Skeleton className="h-48 w-full rounded-[2rem]" />
+          <Skeleton className="h-48 w-full rounded-2xl" />
+          <Skeleton className="h-48 w-full rounded-2xl" />
         </div>
       </div>
     );
@@ -289,7 +289,7 @@ export default function EpisodesPage() {
         description="Episodes are created automatically after investigations."
         action={
           <Link href="/team/agent-runs">
-            <Button variant="primary">Start investigation</Button>
+            <Button variant="soft">Start investigation</Button>
           </Link>
         }
       />
@@ -415,7 +415,7 @@ export default function EpisodesPage() {
             }
           />
         ) : (
-          <Panel className="rounded-[2.5rem] shadow-[0_20px_40px_-15px_rgba(15,23,42,0.05)] divide-y divide-slate-100">
+          <Panel className="rounded-[2.5rem] divide-y divide-slate-100">
             {visibleEpisodes.map((ep) => {
               const expanded = expandedId === ep.episode_id;
               const duration = formatDuration(ep.duration_seconds);

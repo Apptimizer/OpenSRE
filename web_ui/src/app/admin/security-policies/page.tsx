@@ -226,7 +226,7 @@ export default function SecurityPoliciesPage() {
                   type="checkbox"
                   checked={policies.require_approval_for_prompts || false}
                   onChange={(e) => setPolicies({ ...policies, require_approval_for_prompts: e.target.checked })}
-                  className="w-4 h-4 rounded border-stone-300 text-[#3D7B5F] focus:ring-forest"
+                  className="w-4 h-4 rounded border-stone-300 text-forest focus:ring-forest"
                 />
                 <div>
                   <span className="text-sm font-medium text-stone-900 dark:text-white">Require approval for prompt changes</span>
@@ -238,7 +238,7 @@ export default function SecurityPoliciesPage() {
                   type="checkbox"
                   checked={policies.require_approval_for_tools || false}
                   onChange={(e) => setPolicies({ ...policies, require_approval_for_tools: e.target.checked })}
-                  className="w-4 h-4 rounded border-stone-300 text-[#3D7B5F] focus:ring-forest"
+                  className="w-4 h-4 rounded border-stone-300 text-forest focus:ring-forest"
                 />
                 <div>
                   <span className="text-sm font-medium text-stone-900 dark:text-white">Require approval for tool enablement</span>
@@ -250,7 +250,7 @@ export default function SecurityPoliciesPage() {
                   type="checkbox"
                   checked={policies.log_all_changes !== false}
                   onChange={(e) => setPolicies({ ...policies, log_all_changes: e.target.checked })}
-                  className="w-4 h-4 rounded border-stone-300 text-[#3D7B5F] focus:ring-forest"
+                  className="w-4 h-4 rounded border-stone-300 text-forest focus:ring-forest"
                 />
                 <div>
                   <span className="text-sm font-medium text-stone-900 dark:text-white">Log all configuration changes</span>

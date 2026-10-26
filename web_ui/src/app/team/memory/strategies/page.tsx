@@ -30,7 +30,7 @@ const NEUTRAL_CHIP =
 
 function FilterSectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-3">{children}</div>
+    <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500 mb-3">{children}</div>
   );
 }
 
@@ -423,7 +423,7 @@ export default function StrategiesPage() {
                                 ) : null}
                                 <div className="flex items-center gap-2">
                                   <Button
-                                    variant="primary"
+                                    variant="soft"
                                     onClick={() => saveStrategy(strategy.strategy_id)}
                                     disabled={saving}
                                   >

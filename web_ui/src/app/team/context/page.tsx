@@ -218,7 +218,7 @@ export default function TeamContextPage() {
                 </Button>
                 <Button
                   type="button"
-                  variant="primary"
+                  variant="soft"
                   onClick={save}
                   disabled={saving || overCap || loading}
                 >

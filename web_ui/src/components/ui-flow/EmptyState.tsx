@@ -12,8 +12,8 @@ export function EmptyState({
   action?: ReactNode;
 }) {
   return (
-    <div className="rounded-[1.25rem] bg-white border border-slate-200/70 p-12 flex flex-col items-center text-center">
-      <h2 className="text-xl font-medium tracking-tight text-slate-900">{title}</h2>
+    <div className="rounded-2xl bg-white shadow-[inset_0_0_0_1px_var(--apl-neutral-200)] p-12 flex flex-col items-center text-center dark:bg-slate-800 dark:shadow-[inset_0_0_0_1px_var(--apl-neutral-600)]">
+      <h2 className="text-lg font-semibold text-slate-700 dark:text-white">{title}</h2>
       {description ? (
         <p className="mt-3 text-sm text-slate-500 leading-relaxed max-w-[48ch]">{description}</p>
       ) : null}

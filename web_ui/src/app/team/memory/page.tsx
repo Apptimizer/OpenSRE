@@ -95,14 +95,14 @@ export default function MemoryPage() {
     return (
       <div className="space-y-10">
         <div className="grid grid-cols-12 gap-8">
-          <Skeleton className="col-span-12 md:col-span-4 h-56 rounded-[2rem]" />
+          <Skeleton className="col-span-12 md:col-span-4 h-56 rounded-2xl" />
           <div className="col-span-12 md:col-span-8 grid grid-cols-3 gap-x-10">
             <Skeleton className="h-24 rounded-lg" />
             <Skeleton className="h-24 rounded-lg" />
             <Skeleton className="h-24 rounded-lg" />
           </div>
         </div>
-        <Skeleton className="h-72 w-full rounded-[2rem]" />
+        <Skeleton className="h-72 w-full rounded-2xl" />
       </div>
     );
   }
@@ -140,29 +140,21 @@ export default function MemoryPage() {
       <section className="grid grid-cols-12 gap-8 items-start">
         <div className="col-span-12 md:col-span-4">
           <div
-            className="relative overflow-hidden rounded-[2rem] border border-slate-200/70 p-6 shadow-[0_20px_40px_-15px_rgba(15,23,42,0.05)] flex flex-col min-h-[224px]"
-            style={{
-              background: 'linear-gradient(170deg, rgb(209 250 229 / 0.55), white 75%)',
-            }}
-          >
-            <div
-              className="absolute -top-8 -right-8 w-36 h-36 rounded-full breath pointer-events-none"
-              style={{ backgroundColor: 'rgb(16 185 129 / 0.12)', filter: 'blur(40px)' }}
-              aria-hidden
-            />
+            className="relative overflow-hidden rounded-2xl bg-white p-6 flex flex-col min-h-[224px] shadow-[inset_0_0_0_1px_var(--apl-neutral-200)] dark:bg-slate-800 dark:shadow-[inset_0_0_0_1px_var(--apl-neutral-600)]"
+            >
             <div className="relative flex-1 flex flex-col">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] uppercase tracking-[0.22em] text-slate-500">
+                <span className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500">
                   Total episodes
                 </span>
                 {data.episodes_this_week > 0 && (
-                  <span className="inline-flex items-center h-7 px-3 rounded-full text-xs font-medium bg-emerald-100/70 text-emerald-800 border border-emerald-200/80">
+                  <span className="inline-flex items-center h-7 px-3 rounded-full text-xs font-medium bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-300">
                     Growing
                   </span>
                 )}
               </div>
               <div className="mt-4 flex items-baseline gap-2.5">
-                <span className="text-6xl font-medium tracking-tighter text-emerald-800 font-mono tabular-nums leading-none">
+                <span className="text-6xl font-semibold tracking-[-0.04em] text-slate-700 dark:text-white font-mono tabular-nums leading-none">
                   {data.total_episodes}
                 </span>
                 {data.episodes_this_week > 0 && (
@@ -217,7 +209,7 @@ export default function MemoryPage() {
             href="/team/memory/episodes"
             className="border-t border-slate-200 pt-6 block hover:text-emerald-700 transition-colors"
           >
-            <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Resolution</div>
+            <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500">Resolution</div>
             <div className="mt-4 text-4xl font-medium tracking-tight font-mono tabular-nums text-slate-900">
               {data.resolution_rate}%
             </div>
@@ -227,14 +219,14 @@ export default function MemoryPage() {
             href="/team/memory/strategies"
             className="border-t border-slate-200 pt-6 block hover:text-emerald-700 transition-colors"
           >
-            <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Strategies</div>
+            <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500">Strategies</div>
             <div className="mt-4 text-4xl font-medium tracking-tight font-mono tabular-nums text-slate-900">
               {data.strategy_count}
             </div>
             <div className="mt-2 text-xs text-slate-400">playbooks learned</div>
           </Link>
           <div className="border-t border-slate-200 pt-6">
-            <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">Top pattern</div>
+            <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500">Top pattern</div>
             {topPattern ? (
               <>
                 <div className="mt-4 text-4xl font-medium tracking-tight font-mono tabular-nums text-slate-900">
@@ -269,7 +261,7 @@ export default function MemoryPage() {
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
-          <Panel className="rounded-[2.5rem] shadow-[0_20px_40px_-15px_rgba(15,23,42,0.05)]">
+          <Panel className="rounded-[2.5rem]">
             {data.recent_episodes.length === 0 ? (
               <p className="px-5 py-10 text-sm text-slate-500 text-center">
                 No episodes yet. Run an investigation to start building memory.
@@ -336,7 +328,7 @@ export default function MemoryPage() {
 
         <aside className="col-span-12 md:col-span-4 space-y-8">
           <div>
-            <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-4">
+            <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500 mb-4">
               Issue types
             </div>
             {data.issue_type_counts.length === 0 ? (
@@ -349,7 +341,7 @@ export default function MemoryPage() {
                     href={`/team/memory/episodes?issue_type=${encodeURIComponent(row.issue_type)}`}
                     className={`inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium font-mono transition ${
                       i < 3
-                        ? 'bg-emerald-100/70 text-emerald-800 border border-emerald-200/80'
+                        ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-300'
                         : 'bg-slate-50 text-slate-600 border border-slate-200/80 hover:bg-slate-100'
                     }`}
                   >
@@ -372,7 +364,7 @@ export default function MemoryPage() {
           </div>
 
           <div>
-            <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-4">
+            <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500 mb-4">
               Semantic search
             </div>
             <form onSubmit={handleSidebarSearch} className="relative">
@@ -393,10 +385,10 @@ export default function MemoryPage() {
       {/* Pattern activity + latest strategies */}
       <section className="grid grid-cols-12 gap-8">
         <div className="col-span-12 md:col-span-5">
-          <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-4">
+          <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500 mb-4">
             Pattern activity · 14d
           </div>
-          <div className="rounded-[2.5rem] border border-slate-200/70 p-6 overflow-hidden relative bg-white shadow-[0_20px_40px_-15px_rgba(15,23,42,0.05)]">
+          <div className="rounded-[2.5rem] border border-slate-200/70 p-6 overflow-hidden relative bg-white">
             {data.issue_type_counts.length === 0 ? (
               <p className="text-sm text-slate-500">No pattern activity yet.</p>
             ) : (
@@ -428,7 +420,7 @@ export default function MemoryPage() {
 
         <div className="col-span-12 md:col-span-7">
           <div className="flex items-end justify-between mb-4">
-            <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500">
+            <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500">
               Latest strategies
             </div>
             <Link

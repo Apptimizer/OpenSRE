@@ -1656,7 +1656,7 @@ export default function AdminConfigPage() {
                                               className={`flex items-center gap-2 px-3 py-1.5 text-sm rounded-lg transition-colors group ${
                                                 isRemote
                                                   ? 'bg-forest-light/100 text-white hover:bg-forest'
-                                                  : 'bg-[#3D7B5F] text-white hover:bg-[#2D5B47]'
+                                                  : 'bg-forest text-white hover:bg-forest-dark'
                                               }`}
                                               title={isRemote ? 'Remote A2A Agent - Click to remove' : 'Local Agent - Click to remove'}
                                             >

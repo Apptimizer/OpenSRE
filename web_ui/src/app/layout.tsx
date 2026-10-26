@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { RootChrome } from "@/components/shell/RootChrome";
 import { SignInGate } from "@/components/SignInGate";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -58,7 +58,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full bg-[#f9fafb] font-sans`}
+        className={`${inter.variable} ${geistMono.variable} antialiased h-full bg-background font-sans`}
       >
         <ThemeProvider>
           <SignInGate>

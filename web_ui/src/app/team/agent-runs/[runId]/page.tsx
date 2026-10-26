@@ -184,7 +184,7 @@ export default function AgentRunDetailPage() {
 
         <header className="mb-6 min-w-0">
           <div className="flex flex-wrap items-start gap-3 mb-2">
-            <h1 className="text-2xl md:text-3xl font-medium tracking-tight text-slate-900 leading-snug flex-1 min-w-0 dark:text-white">
+            <h1 className="text-[28px] leading-[34px] font-semibold tracking-[-0.02em] text-slate-700 flex-1 min-w-0 dark:text-white">
               {title}
             </h1>
             <RunStatusBadge status={displayStatus} size="md" />

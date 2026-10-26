@@ -1008,7 +1008,7 @@ export default function TeamToolsPage() {
             title="Tools"
             subtitle="Integrations, MCP servers, and skills available to your AI agents"
             actions={
-              <Button variant="primary" onClick={() => setShowAddCustomModal(true)}>
+              <Button variant="soft" onClick={() => setShowAddCustomModal(true)}>
                 <Plus className="w-4 h-4" />
                 Add Custom
               </Button>

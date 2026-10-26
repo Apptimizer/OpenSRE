@@ -648,7 +648,7 @@ export default function AgentSettingsPage() {
               </button>
 
               {editingAgent && (
-                <Button variant="primary" onClick={handleSave} disabled={saving}>
+                <Button variant="soft" onClick={handleSave} disabled={saving}>
                   {saving ? (
                     <span className="live-dot w-2 h-2 rounded-full shrink-0" aria-hidden />
                   ) : (

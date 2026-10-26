@@ -15,7 +15,7 @@ export function Panel({
     <Tag
       {...props}
       className={clsx(
-        'bg-white border border-slate-200/70 rounded-[1.25rem] overflow-hidden',
+        'bg-white rounded-2xl shadow-[inset_0_0_0_1px_var(--apl-neutral-200)] overflow-hidden dark:bg-slate-800 dark:shadow-[inset_0_0_0_1px_var(--apl-neutral-600)]',
         className,
       )}
     >

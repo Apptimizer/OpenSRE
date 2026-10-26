@@ -47,12 +47,12 @@ export function TeamSidebar({ collapsed, onToggle }: Props) {
 
   return (
     <aside
-      className="relative sticky top-[57px] h-[calc(100dvh-57px)] shrink-0 border-r border-slate-200/60 bg-white/40 px-3 py-6 pb-28 backdrop-blur transition-[width] duration-300 ease-out"
+      className="relative sticky top-[57px] h-[calc(100dvh-57px)] shrink-0 bg-white px-3 py-6 pb-28 shadow-[inset_-1px_0_0_var(--apl-neutral-300)] transition-[width] duration-200 ease-[var(--apl-ease)] dark:bg-slate-800 dark:shadow-[inset_-1px_0_0_var(--apl-neutral-600)]"
       style={{ width }}
     >
       <div className="mb-6 flex items-center justify-between px-3">
         {!collapsed && (
-          <span className="text-[11px] uppercase tracking-[0.22em] text-slate-400">
+          <span className="text-xs font-bold uppercase tracking-[0.06em] text-slate-400">
             workspace
           </span>
         )}
@@ -60,7 +60,7 @@ export function TeamSidebar({ collapsed, onToggle }: Props) {
           type="button"
           onClick={onToggle}
           className={clsx(
-            'rounded-md p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700',
+            'rounded-lg p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-700 dark:hover:text-white',
             collapsed && 'mx-auto',
           )}
           aria-label="Toggle sidebar"
@@ -83,23 +83,16 @@ export function TeamSidebar({ collapsed, onToggle }: Props) {
               href={item.href}
               title={collapsed ? item.name : undefined}
               className={clsx(
-                'relative flex items-center gap-3 rounded-xl px-3 py-2 text-left transition-colors',
+                'relative flex h-10 items-center gap-3 rounded-lg px-3 text-left transition-colors duration-[120ms]',
                 isActive
-                  ? 'bg-emerald-100/55 text-emerald-700'
-                  : 'text-slate-600 hover:bg-slate-100/70 hover:text-slate-900',
+                  ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-300'
+                  : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white',
                 collapsed && 'justify-center px-2',
               )}
             >
-              <span
-                className={clsx(
-                  'absolute -left-[10px] top-1/2 h-[18px] w-[3px] -translate-y-1/2 rounded-sm bg-emerald-500 transition-opacity',
-                  isActive ? 'opacity-100' : 'opacity-0',
-                )}
-                aria-hidden
-              />
               <item.icon className="h-[18px] w-[18px] shrink-0" />
               {!collapsed && (
-                <span className="truncate text-sm font-medium">{item.name}</span>
+                <span className={clsx('truncate text-sm', isActive ? 'font-semibold' : 'font-medium')}>{item.name}</span>
               )}
             </Link>
           );
@@ -107,7 +100,7 @@ export function TeamSidebar({ collapsed, onToggle }: Props) {
       </nav>
 
       <div className="absolute bottom-4 left-3 right-3">
-        <div className="rounded-xl bg-slate-900/90 p-2">
+        <div className="rounded-2xl bg-slate-50 p-2 shadow-[inset_0_0_0_1px_var(--apl-neutral-200)] dark:bg-slate-700 dark:shadow-[inset_0_0_0_1px_var(--apl-neutral-600)]">
           <AccountMenu />
         </div>
       </div>

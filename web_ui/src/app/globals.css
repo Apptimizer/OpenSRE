@@ -2,73 +2,202 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+/* applift design system ramps (Claude Design project "applift Design System", tokens/colors.css). */
 :root {
-  --background: #f9fafb;
-  --foreground: #0f172a; /* slate-900 */
+  --apl-primary-100: #FEE2E7; --apl-primary-200: #FFB9C6; --apl-primary-300: #FF859B; --apl-primary-400: #FF5D7A;
+  --apl-primary-500: #FF3459; --apl-primary-600: #CC2A47; --apl-primary-700: #991F35;
+  --apl-secondary-100: #E4E2FD; --apl-secondary-200: #BCB6FA; --apl-secondary-300: #948BF7; --apl-secondary-400: #6C60F5;
+  --apl-secondary-500: #4535F2; --apl-secondary-600: #200EEB;
+  --apl-neutral-100: #FFFFFF; --apl-neutral-150: #F8F7FA; --apl-neutral-200: #F1EFF5; --apl-neutral-300: #DEDCE8;
+  --apl-neutral-400: #C1BFCF; --apl-neutral-450: #8C8A9A; --apl-neutral-500: #6E6B7A; --apl-neutral-600: #504D5D;
+  --apl-neutral-700: #322F40; --apl-neutral-800: #191723;
+  --apl-success-100: #E9F8EE; --apl-success-200: #B2EEC5; --apl-success-300: #7DE29D; --apl-success-400: #47D675;
+  --apl-success-500: #28B655; --apl-success-600: #24A34C; --apl-success-700: #1D823C;
+  --apl-alert-100: #FFF5E8; --apl-alert-200: #FFDFB6; --apl-alert-300: #FFCA83; --apl-alert-400: #FEB552;
+  --apl-alert-500: #FFA020; --apl-alert-600: #E5901D; --apl-alert-700: #C37A16; --apl-alert-800: #E26600;
+  --apl-info-100: #E6F0FF; --apl-info-200: #C4DBFE; --apl-info-300: #A2C7FF; --apl-info-400: #80B3FF;
+  --apl-info-500: #5E9FFF; --apl-info-600: #548FE5; --apl-info-700: #3178E0;
+  --apl-error-100: #FDE5E6; --apl-error-200: #F8B2B4; --apl-error-300: #F48081; --apl-error-400: #F04D4F;
+  --apl-error-500: #E90004; --apl-error-600: #D20004; --apl-error-700: #BA0003;
+  --apl-bad-500: #D82A07;
+
+  --apl-shadow-panel: 0 8px 20px 0 rgba(50, 47, 64, .1);
+  --apl-shadow-modal: 0 20px 60px 0 rgba(50, 47, 64, .2);
+  --apl-shadow-focus-lift: 0 16px 32px -12px rgba(88, 92, 95, .1);
+  --apl-ease: cubic-bezier(.2, .8, .2, 1);
+
+  --background: var(--apl-neutral-150);
+  --foreground: var(--apl-neutral-700);
 }
 
+.dark {
+  --background: var(--apl-neutral-800);
+  --foreground: var(--apl-neutral-100);
+}
+
+/*
+ * shortcut: the Tailwind palettes the app already uses are remapped onto applift ramps, so every
+ * page restyles without touching its classes. Neutral greys -> applift neutral, emerald (the old
+ * selection accent) -> indigo, green -> success, rose/red -> error, amber/yellow/orange -> alert.
+ * Move pages to semantic class names when they are next redesigned.
+ */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 
-  /* Keep legacy stone/forest/clay for admin until cleanup */
-  --color-stone-50:  #FAFAF7;
-  --color-stone-100: #F5F3EF;
-  --color-stone-200: #E8E5DE;
-  --color-stone-300: #D4D0C8;
-  --color-stone-400: #A09E97;
-  --color-stone-500: #7A7870;
-  --color-stone-600: #5A5850;
-  --color-stone-700: #3D3B35;
-  --color-stone-800: #2D2D2D;
-  --color-stone-900: #1A1A18;
-  --color-forest: #3D7B5F;
-  --color-forest-light: #4E9B77;
-  --color-forest-dark: #2D5B47;
-  --color-clay: #c25e4c;
-  --color-clay-light: #d67665;
-  --color-clay-dark: #a34a3a;
+  --color-brand: var(--apl-primary-500);
+  --color-brand-hover: var(--apl-primary-600);
+  --color-bad: var(--apl-bad-500);
 
-  /* flow-ui accent aliases */
-  --color-accent: #10b981;
-  --color-accent-soft: #d1fae5;
-  --color-accent-deep: #059669;
+  --color-slate-50: var(--apl-neutral-150);
+  --color-slate-100: var(--apl-neutral-200);
+  --color-slate-200: var(--apl-neutral-300);
+  --color-slate-300: var(--apl-neutral-400);
+  --color-slate-400: var(--apl-neutral-450);
+  --color-slate-500: var(--apl-neutral-500);
+  --color-slate-600: var(--apl-neutral-600);
+  --color-slate-700: var(--apl-neutral-700);
+  --color-slate-800: var(--apl-neutral-700);
+  --color-slate-900: var(--apl-neutral-800);
+  --color-slate-950: var(--apl-neutral-800);
+
+  --color-stone-50: var(--apl-neutral-150);
+  --color-stone-100: var(--apl-neutral-200);
+  --color-stone-200: var(--apl-neutral-300);
+  --color-stone-300: var(--apl-neutral-400);
+  --color-stone-400: var(--apl-neutral-450);
+  --color-stone-500: var(--apl-neutral-500);
+  --color-stone-600: var(--apl-neutral-600);
+  --color-stone-700: var(--apl-neutral-600);
+  --color-stone-800: var(--apl-neutral-700);
+  --color-stone-900: var(--apl-neutral-800);
+  --color-stone-950: var(--apl-neutral-800);
+
+  --color-emerald-50: var(--apl-secondary-100);
+  --color-emerald-100: var(--apl-secondary-100);
+  --color-emerald-200: var(--apl-secondary-200);
+  --color-emerald-300: var(--apl-secondary-300);
+  --color-emerald-400: var(--apl-secondary-400);
+  --color-emerald-500: var(--apl-secondary-500);
+  --color-emerald-600: var(--apl-secondary-500);
+  --color-emerald-700: var(--apl-secondary-600);
+  --color-emerald-800: var(--apl-secondary-600);
+  --color-emerald-900: var(--apl-secondary-600);
+  --color-emerald-950: var(--apl-secondary-600);
+
+  --color-green-50: var(--apl-success-100);
+  --color-green-100: var(--apl-success-100);
+  --color-green-200: var(--apl-success-200);
+  --color-green-300: var(--apl-success-300);
+  --color-green-400: var(--apl-success-400);
+  --color-green-500: var(--apl-success-500);
+  --color-green-600: var(--apl-success-600);
+  --color-green-700: var(--apl-success-700);
+  --color-green-800: var(--apl-success-700);
+  --color-green-900: var(--apl-success-700);
+  --color-green-950: var(--apl-success-700);
+
+  --color-rose-50: var(--apl-error-100);
+  --color-rose-100: var(--apl-error-100);
+  --color-rose-200: var(--apl-error-200);
+  --color-rose-300: var(--apl-error-300);
+  --color-rose-400: var(--apl-error-400);
+  --color-rose-500: var(--apl-error-500);
+  --color-rose-600: var(--apl-error-600);
+  --color-rose-700: var(--apl-error-700);
+  --color-rose-800: var(--apl-error-700);
+  --color-rose-900: var(--apl-error-700);
+  --color-rose-950: var(--apl-error-700);
+
+  --color-red-50: var(--apl-error-100);
+  --color-red-100: var(--apl-error-100);
+  --color-red-200: var(--apl-error-200);
+  --color-red-300: var(--apl-error-300);
+  --color-red-400: var(--apl-error-400);
+  --color-red-500: var(--apl-error-500);
+  --color-red-600: var(--apl-error-600);
+  --color-red-700: var(--apl-error-700);
+  --color-red-800: var(--apl-error-700);
+  --color-red-900: var(--apl-error-700);
+  --color-red-950: var(--apl-error-700);
+
+  /* alert text needs 700 for contrast on white, so 600 maps one step darker */
+  --color-amber-50: var(--apl-alert-100);
+  --color-amber-100: var(--apl-alert-100);
+  --color-amber-200: var(--apl-alert-200);
+  --color-amber-300: var(--apl-alert-300);
+  --color-amber-400: var(--apl-alert-400);
+  --color-amber-500: var(--apl-alert-500);
+  --color-amber-600: var(--apl-alert-700);
+  --color-amber-700: var(--apl-alert-700);
+  --color-amber-800: var(--apl-alert-700);
+  --color-amber-900: var(--apl-alert-700);
+  --color-amber-950: var(--apl-alert-700);
+
+  --color-yellow-50: var(--apl-alert-100);
+  --color-yellow-100: var(--apl-alert-100);
+  --color-yellow-200: var(--apl-alert-200);
+  --color-yellow-300: var(--apl-alert-300);
+  --color-yellow-400: var(--apl-alert-400);
+  --color-yellow-500: var(--apl-alert-500);
+  --color-yellow-600: var(--apl-alert-700);
+  --color-yellow-700: var(--apl-alert-700);
+  --color-yellow-800: var(--apl-alert-700);
+  --color-yellow-900: var(--apl-alert-700);
+  --color-yellow-950: var(--apl-alert-700);
+
+  --color-orange-100: var(--apl-alert-100);
+  --color-orange-500: var(--apl-alert-800);
+  --color-orange-600: var(--apl-alert-800);
+
+  /* legacy admin aliases: forest was the action colour (-> indigo), clay the error colour */
+  --color-forest: var(--apl-secondary-500);
+  --color-forest-light: var(--apl-secondary-400);
+  --color-forest-dark: var(--apl-secondary-600);
+  --color-clay: var(--apl-error-500);
+  --color-clay-light: var(--apl-error-400);
+  --color-clay-dark: var(--apl-error-600);
+
+  /* flow-ui accent aliases (selection = indigo) */
+  --color-accent: var(--apl-secondary-500);
+  --color-accent-soft: var(--apl-secondary-100);
+  --color-accent-deep: var(--apl-secondary-600);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 @keyframes livepulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgb(16 185 129 / 0.45); }
-  50% { box-shadow: 0 0 0 6px rgb(16 185 129 / 0); }
+  0%, 100% { opacity: 1; }
+  50% { opacity: .35; }
 }
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
 @keyframes breath {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.08); }
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
+/* State moves colour, not geometry (applift motion rule): pulses fade, nothing scales. */
 .live-dot {
-  background-color: rgb(16 185 129);
-  animation: livepulse 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background-color: var(--apl-secondary-500);
+  animation: livepulse 1.8s var(--apl-ease) infinite;
 }
 .shimmer {
-  background: linear-gradient(110deg, transparent 25%, rgb(241 245 249 / 0.9) 50%, transparent 75%);
+  background: linear-gradient(110deg, transparent 25%, rgb(255 255 255 / 0.7) 50%, transparent 75%);
   background-size: 200% 100%;
   animation: shimmer 2.6s linear infinite;
 }
 .breath {
   animation: breath 4s ease-in-out infinite;
-  transform-origin: center;
 }
 @keyframes carouselX {
   0% { transform: translateX(0); }
@@ -76,4 +205,7 @@ body {
 }
 .carousel-track {
   animation: carouselX 22s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .live-dot, .shimmer, .breath, .carousel-track { animation: none; }
 }

@@ -37,32 +37,13 @@ export interface InvestigationReportData {
   lessons_learned?: string[];
 }
 
-const SEVERITY_COLORS: Record<string, { border: string; badge: string; text: string }> = {
-  critical: {
-    border: 'border-l-clay',
-    badge: 'bg-clay-light/15 text-clay-dark dark:bg-clay/20 dark:text-clay-light',
-    text: 'text-clay',
-  },
-  high: {
-    border: 'border-l-emerald-500',
-    badge: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300',
-    text: 'text-emerald-500',
-  },
-  medium: {
-    border: 'border-l-yellow-500',
-    badge: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300',
-    text: 'text-yellow-500',
-  },
-  low: {
-    border: 'border-l-forest',
-    badge: 'bg-forest-light/15 text-forest-dark dark:bg-forest/20 dark:text-forest-light',
-    text: 'text-forest',
-  },
-  info: {
-    border: 'border-l-stone-400',
-    badge: 'bg-stone-100 text-stone-700 dark:bg-stone-700 dark:text-stone-300',
-    text: 'text-stone-400',
-  },
+// applift semantic ramps: error > alert > info > neutral. Severity reads from the badge, not a side stripe.
+const SEVERITY_COLORS: Record<string, { badge: string }> = {
+  critical: { badge: 'bg-rose-100 text-rose-600 dark:bg-rose-500/20 dark:text-rose-300' },
+  high: { badge: 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300' },
+  medium: { badge: 'bg-[var(--apl-info-100)] text-[var(--apl-info-700)] dark:bg-[var(--apl-info-500)]/20 dark:text-[var(--apl-info-300)]' },
+  low: { badge: 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300' },
+  info: { badge: 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300' },
 };
 
 const STATUS_COLORS: Record<string, string> = {
@@ -82,7 +63,7 @@ function SectionHeader({ icon, title }: { icon: React.ReactNode; title: string }
   return (
     <div className="flex items-center gap-2 mb-2">
       {icon}
-      <h4 className="text-sm font-semibold text-stone-700 dark:text-stone-300 uppercase tracking-wide">
+      <h4 className="text-xs font-bold text-stone-400 uppercase tracking-[0.06em]">
         {title}
       </h4>
     </div>
@@ -173,9 +154,9 @@ export default function InvestigationReport({ report }: { report: InvestigationR
   const visibleTimeline = timelineExpanded ? timeline : timeline.slice(0, 5);
 
   return (
-    <div className={`border-l-4 ${sevColors.border} rounded-xl bg-white dark:bg-stone-800 border border-slate-200/80 dark:border-stone-700 overflow-hidden`}>
+    <div className="rounded-2xl bg-white dark:bg-stone-800 shadow-[inset_0_0_0_1px_var(--apl-neutral-200)] dark:shadow-[inset_0_0_0_1px_var(--apl-neutral-600)] overflow-hidden">
       {/* Header */}
-      <div className="p-4 pb-3">
+      <div className="px-6 pt-5 pb-4">
         <div className="flex items-start justify-between gap-3 mb-2">
           <h3 className="text-lg font-bold text-stone-900 dark:text-white leading-tight">
             {normalized.title}
@@ -207,7 +188,7 @@ export default function InvestigationReport({ report }: { report: InvestigationR
 
       {/* Executive Summary */}
       {normalized.executive_summary && (
-        <div className="px-4 py-3 border-t border-stone-100 dark:border-stone-700">
+        <div className="px-6 py-4 border-t border-stone-100 dark:border-stone-700">
           <SectionHeader
             icon={<Shield className="w-4 h-4 text-stone-500" />}
             title="Executive Summary"
@@ -220,27 +201,27 @@ export default function InvestigationReport({ report }: { report: InvestigationR
 
       {/* Impact */}
       {normalized.impact && (normalized.impact.user_facing || normalized.impact.service_impact || normalized.impact.blast_radius) && (
-        <div className="px-4 py-3 border-t border-stone-100 dark:border-stone-700">
+        <div className="px-6 py-4 border-t border-stone-100 dark:border-stone-700">
           <SectionHeader
             icon={<Target className="w-4 h-4 text-stone-500" />}
             title="Impact"
           />
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {normalized.impact.user_facing && (
-              <div className="bg-stone-50 dark:bg-stone-700/50 rounded-lg p-2.5">
-                <div className="text-xs text-stone-500 uppercase tracking-wide mb-1">User-Facing</div>
+              <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-3 shadow-[inset_0_0_0_1px_var(--apl-neutral-200)] dark:shadow-none">
+                <div className="text-xs font-bold text-stone-400 uppercase tracking-[0.06em] mb-1">User-Facing</div>
                 <div className="text-sm text-stone-700 dark:text-stone-300">{normalized.impact.user_facing}</div>
               </div>
             )}
             {normalized.impact.service_impact && (
-              <div className="bg-stone-50 dark:bg-stone-700/50 rounded-lg p-2.5">
-                <div className="text-xs text-stone-500 uppercase tracking-wide mb-1">Service Impact</div>
+              <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-3 shadow-[inset_0_0_0_1px_var(--apl-neutral-200)] dark:shadow-none">
+                <div className="text-xs font-bold text-stone-400 uppercase tracking-[0.06em] mb-1">Service Impact</div>
                 <div className="text-sm text-stone-700 dark:text-stone-300">{normalized.impact.service_impact}</div>
               </div>
             )}
             {normalized.impact.blast_radius && (
-              <div className="bg-stone-50 dark:bg-stone-700/50 rounded-lg p-2.5">
-                <div className="text-xs text-stone-500 uppercase tracking-wide mb-1">Blast Radius</div>
+              <div className="bg-stone-50 dark:bg-stone-700 rounded-xl p-3 shadow-[inset_0_0_0_1px_var(--apl-neutral-200)] dark:shadow-none">
+                <div className="text-xs font-bold text-stone-400 uppercase tracking-[0.06em] mb-1">Blast Radius</div>
                 <div className="text-sm text-stone-700 dark:text-stone-300">{normalized.impact.blast_radius}</div>
               </div>
             )}
@@ -250,7 +231,7 @@ export default function InvestigationReport({ report }: { report: InvestigationR
 
       {/* Root Cause */}
       {normalized.root_cause && normalized.root_cause.summary && (
-        <div className="px-4 py-3 border-t border-stone-100 dark:border-stone-700">
+        <div className="px-6 py-4 border-t border-stone-100 dark:border-stone-700">
           <SectionHeader
             icon={<AlertTriangle className="w-4 h-4 text-stone-500" />}
             title="Root Cause"
@@ -277,7 +258,7 @@ export default function InvestigationReport({ report }: { report: InvestigationR
 
       {/* Evidence */}
       {normalized.evidence && normalized.evidence.length > 0 && (
-        <div className="px-4 py-3 border-t border-stone-100 dark:border-stone-700">
+        <div className="px-6 py-4 border-t border-stone-100 dark:border-stone-700">
           <SectionHeader
             icon={<FileSearch className="w-4 h-4 text-stone-500" />}
             title="Evidence"
@@ -297,7 +278,7 @@ export default function InvestigationReport({ report }: { report: InvestigationR
 
       {/* Timeline */}
       {timeline.length > 0 && (
-        <div className="px-4 py-3 border-t border-stone-100 dark:border-stone-700">
+        <div className="px-6 py-4 border-t border-stone-100 dark:border-stone-700">
           <SectionHeader
             icon={<Clock className="w-4 h-4 text-stone-500" />}
             title="Timeline"
@@ -339,29 +320,27 @@ export default function InvestigationReport({ report }: { report: InvestigationR
 
       {/* Recommended Fix */}
       {normalized.action_items && normalized.action_items.length > 0 && (
-        <div className="px-4 py-3 border-t border-stone-100 dark:border-stone-700">
+        <div className="px-6 py-4 border-t border-stone-100 dark:border-stone-700">
           <SectionHeader
             icon={<CheckCircle2 className="w-4 h-4 text-stone-500" />}
             title="Recommended Fix"
           />
           <div className="space-y-1.5">
             {normalized.action_items.map((item, i) => (
-              <div
-                key={i}
-                className={`border-l-2 rounded-r px-3 py-1.5 ${
-                  item.additional
-                    ? 'border-l-stone-300 bg-stone-50 dark:bg-stone-700/50'
-                    : 'border-l-emerald-500 bg-emerald-50 dark:bg-emerald-900/10'
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  {item.additional && (
-                    <span className="text-xs font-medium text-stone-500 uppercase flex-shrink-0">
-                      additional
-                    </span>
-                  )}
-                  <span className="text-sm text-stone-700 dark:text-stone-300">{item.action}</span>
-                </div>
+              <div key={i} className="flex items-start gap-2.5">
+                <span className="w-4 shrink-0 font-mono text-xs leading-5 text-stone-400">{i + 1}</span>
+                {item.additional && (
+                  <span className="text-xs font-bold leading-5 text-stone-400 uppercase tracking-[0.06em] flex-shrink-0">
+                    additional
+                  </span>
+                )}
+                <span
+                  className={`text-sm leading-5 ${
+                    item.additional ? 'text-stone-500 dark:text-stone-400' : 'text-stone-700 dark:text-stone-300'
+                  }`}
+                >
+                  {item.action}
+                </span>
               </div>
             ))}
           </div>
@@ -370,7 +349,7 @@ export default function InvestigationReport({ report }: { report: InvestigationR
 
       {/* Lessons Learned */}
       {normalized.lessons_learned && normalized.lessons_learned.length > 0 && (
-        <div className="px-4 py-3 border-t border-stone-100 dark:border-stone-700">
+        <div className="px-6 py-4 border-t border-stone-100 dark:border-stone-700">
           <SectionHeader
             icon={<Lightbulb className="w-4 h-4 text-stone-500" />}
             title="Lessons Learned"

@@ -100,7 +100,7 @@ const triggerIcon = (s: string) => {
 
 function FilterSectionLabel({ children }: { children: ReactNode }) {
   return (
-    <div className="text-[11px] uppercase tracking-[0.22em] text-slate-500 mb-3">
+    <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500 mb-3">
       {children}
     </div>
   );
@@ -360,7 +360,7 @@ export default function TeamAgentRunsPage() {
         <EmptyState
           title="No investigations yet"
           action={
-            <Button variant="primary" onClick={openInvestigation}>
+            <Button variant="soft" onClick={openInvestigation}>
               <Plus className="w-3.5 h-3.5" />
               New Investigation
             </Button>
@@ -477,7 +477,7 @@ export default function TeamAgentRunsPage() {
             ) : (
               <Panel
                 as="ul"
-                className="rounded-[1.5rem] shadow-[0_20px_40px_-15px_rgba(15,23,42,0.05)] divide-y divide-slate-100"
+                className="rounded-2xl divide-y divide-slate-100"
               >
                 {filtered.map((conv) => {
                   const ep = episodeMap.get(conv.correlationId);
@@ -491,9 +491,8 @@ export default function TeamAgentRunsPage() {
                         type="button"
                         onClick={() => router.push(`/team/agent-runs/${conv.latestRun.id}`)}
                         className={clsx(
-                          'w-full text-left px-5 py-4',
+                          'w-full text-left px-6 py-4',
                           listRowHoverClass,
-                          isRunning && 'border-l-2 border-emerald-400',
                         )}
                       >
                         <div className="flex items-start gap-3">

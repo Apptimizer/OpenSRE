@@ -112,7 +112,7 @@ export default function MemorySearchPage() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <div className="rounded-[2rem] bg-white border border-slate-200/70 p-6 shadow-[0_20px_40px_-15px_rgba(15,23,42,0.05)]">
+      <div className="rounded-2xl bg-white border border-slate-200/70 p-6">
         <div className="space-y-5">
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -158,7 +158,7 @@ export default function MemorySearchPage() {
           </div>
 
           <Button
-            variant="primary"
+            variant="soft"
             onClick={() => handleSearch()}
             disabled={loading || !query.trim()}
             className="w-full justify-center h-10 rounded-xl"

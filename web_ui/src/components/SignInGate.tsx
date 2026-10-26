@@ -149,10 +149,10 @@ export function SignInGate({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen grid lg:grid-cols-[1.1fr_0.9fr] bg-white text-slate-900">
       <LoginHero />
 
-      <div className="flex items-center justify-center min-h-[50vh] lg:min-h-screen px-6 py-14 lg:px-12 xl:px-14 bg-[#f9fafb] border-l border-slate-200/60">
+      <div className="flex items-center justify-center min-h-[50vh] lg:min-h-screen px-6 py-14 lg:px-12 xl:px-14 bg-background border-l border-slate-200/60">
         <div className="w-full max-w-[440px]">
           <header className="mb-8">
-            <div className="text-[11px] uppercase tracking-[0.22em] text-slate-400 mb-4">
+            <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-400 mb-4">
               Team console
             </div>
             <h2 className="text-4xl md:text-[2.75rem] font-medium tracking-tight text-slate-900 leading-none">
@@ -163,7 +163,7 @@ export function SignInGate({ children }: { children: React.ReactNode }) {
             </p>
           </header>
 
-          <div className="rounded-[2rem] border border-slate-200/70 bg-white p-7 md:p-8 shadow-[0_20px_40px_-15px_rgba(15,23,42,0.06)]">
+          <div className="rounded-2xl border border-slate-200/70 bg-white p-7 md:p-8">
             <div className="space-y-5">
               {loadingSSO ? (
                 <div className="flex items-center justify-center py-4">

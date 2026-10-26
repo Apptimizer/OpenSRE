@@ -400,7 +400,7 @@ export default function TeamKnowledgePage() {
   const headerActions =
     activeTab === 'explorer' ? (
       selectedTree ? (
-        <Button variant="primary" onClick={() => setShowUploadModal(true)}>
+        <Button variant="soft" onClick={() => setShowUploadModal(true)}>
           <Upload className="w-4 h-4" />
           Upload
         </Button>
@@ -422,7 +422,7 @@ export default function TeamKnowledgePage() {
           <Upload className={`w-4 h-4 ${uploading ? 'animate-pulse' : ''}`} />
           {uploading ? 'Uploading...' : 'Upload'}
         </Button>
-        <Button variant="primary" onClick={() => setShowAddModal(true)}>
+        <Button variant="soft" onClick={() => setShowAddModal(true)}>
           <Plus className="w-4 h-4" />
           Add Entry
         </Button>
@@ -676,7 +676,7 @@ export default function TeamKnowledgePage() {
                             >
                               Reject
                             </Button>
-                            <Button variant="primary" onClick={() => handleApproveChange(change.id)}>
+                            <Button variant="soft" onClick={() => handleApproveChange(change.id)}>
                               Approve
                             </Button>
                           </div>

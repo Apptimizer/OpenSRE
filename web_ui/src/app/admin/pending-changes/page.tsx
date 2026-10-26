@@ -178,7 +178,7 @@ export default function PendingChangesPage() {
             onClick={() => setStatusFilter(status)}
             className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
               statusFilter === status
-                ? 'bg-[#3D7B5F] text-white'
+                ? 'bg-forest text-white'
                 : 'bg-stone-100 dark:bg-stone-700 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700'
             }`}
           >

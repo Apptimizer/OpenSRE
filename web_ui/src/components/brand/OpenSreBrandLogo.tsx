@@ -1,13 +1,13 @@
 import Image from 'next/image';
+import { clsx } from 'clsx';
 
 type Variant = 'wordmark' | 'spinner';
 // avatar = chat bubble icon (investigation transcript)
 type Surface = 'topbar' | 'login' | 'avatar';
 
-const ASSETS = {
-  wordmark: { src: '/brand/opensre-wordmark.png', width: 1584, height: 440 },
-  spinner: { src: '/brand/opensre-spinner.png', width: 803, height: 815 },
-} as const;
+// applift brand assets from the applift Design System; the dark wordmark only recolours the text.
+const WORDMARK = { light: '/brand/applift-logo.svg', dark: '/brand/applift-logo-dark.svg', width: 131.571, height: 50 };
+const MARK = { src: '/brand/applift-mark.svg', width: 50, height: 50 };
 
 type Props = {
   variant: Variant;
@@ -16,26 +16,38 @@ type Props = {
 };
 
 export function OpenSreBrandLogo({ variant, surface, priority }: Props) {
-  const asset = ASSETS[variant];
-  const isSpinner = variant === 'spinner';
+  if (variant === 'spinner') {
+    return (
+      <Image
+        src={MARK.src}
+        alt="applift"
+        width={MARK.width}
+        height={MARK.height}
+        priority={priority}
+        className={surface === 'avatar' ? 'h-5 w-5' : 'h-7 w-7'}
+      />
+    );
+  }
 
-  const className =
-    surface === 'login'
-      ? 'h-24 w-auto max-w-[640px] object-contain object-left'
-      : surface === 'avatar'
-        ? 'h-5 w-5 object-contain'
-        : isSpinner
-          ? 'h-7 w-7 object-contain'
-          : 'h-[35px] w-auto max-w-[210px] object-contain object-left';
-
+  const size = surface === 'login' ? 'h-16 w-auto' : 'h-7 w-auto';
   return (
-    <Image
-      src={asset.src}
-      alt="OpenSRE"
-      width={asset.width}
-      height={asset.height}
-      priority={priority}
-      className={className}
-    />
+    <>
+      <Image
+        src={WORDMARK.light}
+        alt="applift"
+        width={WORDMARK.width}
+        height={WORDMARK.height}
+        priority={priority}
+        className={clsx(size, 'dark:hidden')}
+      />
+      <Image
+        src={WORDMARK.dark}
+        alt="applift"
+        width={WORDMARK.width}
+        height={WORDMARK.height}
+        priority={priority}
+        className={clsx(size, 'hidden dark:block')}
+      />
+    </>
   );
 }

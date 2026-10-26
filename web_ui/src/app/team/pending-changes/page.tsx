@@ -466,7 +466,7 @@ export default function TeamPendingChangesPage() {
                         {change.changeType === 'integration_recommendation' ? 'Not now' : 'Reject'}
                       </Button>
                       <Button
-                        variant="primary"
+                        variant="soft"
                         onClick={() => handleApprove(change.id)}
                         disabled={processing === change.id}
                       >

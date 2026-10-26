@@ -5,15 +5,16 @@ import { clsx } from 'clsx';
 
 type Variant = 'primary' | 'secondary' | 'soft' | 'ghost';
 
-/** flow-ui soft accent (e.g. Overview “Resume last”) — primary CTAs use this, not solid emerald */
+/** applift indigo tint (selection colour) — for secondary emphasis; red stays on the one primary action */
 export const ACCENT_BUTTON =
-  'bg-emerald-100/50 text-emerald-700 hover:bg-emerald-100/80';
+  'bg-emerald-100 text-emerald-600 hover:bg-emerald-200/60 dark:bg-emerald-500/20 dark:text-emerald-300';
 
 const VARIANT: Record<Variant, string> = {
-  primary: ACCENT_BUTTON,
-  secondary: 'bg-white text-slate-900 border border-slate-200/70 hover:bg-slate-50',
+  primary: 'bg-brand text-white hover:bg-brand-hover',
+  secondary:
+    'bg-white text-slate-700 shadow-[inset_0_0_0_1px_var(--apl-neutral-300)] hover:bg-slate-100 dark:bg-slate-800 dark:text-white dark:shadow-[inset_0_0_0_1px_var(--apl-neutral-600)] dark:hover:bg-slate-600',
   soft: ACCENT_BUTTON,
-  ghost: 'text-slate-600 hover:bg-slate-100/70 hover:text-slate-900',
+  ghost: 'text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-white',
 };
 
 export function Button({
@@ -26,7 +27,7 @@ export function Button({
     <button
       {...props}
       className={clsx(
-        'inline-flex items-center gap-2 h-9 px-3.5 rounded-full text-[13.5px] font-medium transition active:translate-y-[1px] disabled:opacity-50',
+        'inline-flex items-center gap-2 h-10 px-4 rounded-xl text-sm font-bold transition-colors duration-[120ms] ease-[var(--apl-ease)] focus-visible:outline-none focus-visible:shadow-[inset_0_0_0_2px_var(--apl-neutral-600)] disabled:bg-slate-100 disabled:text-slate-300 disabled:shadow-none',
         VARIANT[variant],
         className,
       )}
