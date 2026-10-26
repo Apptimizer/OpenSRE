@@ -71,6 +71,7 @@ describe('AccountMenu', () => {
     });
     render(<AccountMenu />);
     expect(screen.queryByText('jane@example.com')).not.toBeInTheDocument();
+    expect(screen.getByText('Account')).toBeInTheDocument();
     expect(screen.queryByText('local')).not.toBeInTheDocument();
     expect(screen.queryByText('default')).not.toBeInTheDocument();
     expect(screen.queryByText('—')).not.toBeInTheDocument();

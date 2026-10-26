@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useIdentity } from '@/lib/useIdentity';
 import { applyTheme, getTheme, setTheme, type ThemeMode } from '@/lib/theme';
-import { ChevronUp, LogOut, Settings, Moon, Sun, KeyRound } from 'lucide-react';
+import { ChevronUp, LogOut, Settings, Moon, Sun, KeyRound, UserRound } from 'lucide-react';
 import Link from 'next/link';
 import { clearAuthToken } from '@/lib/authToken';
 
@@ -43,6 +43,12 @@ export function AccountMenu() {
               title={identity?.name ? (identity.email ?? undefined) : undefined}
             >
               {identity?.name || identity?.email}
+            </div>
+          )}
+          {!hasPersona && (
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-white">
+              <UserRound className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+              Account
             </div>
           )}
         </div>
