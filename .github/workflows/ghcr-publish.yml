@@ -1,18 +1,18 @@
 # Build images and the Helm chart from this fork into ghcr.io/apptimizer.
 #
-# Runs on pushes to the `apptimizer` branch (and manually). Every artifact is
-# keyed by the commit it was built from:
+# Runs on pushes to the `apptimizer` and `applift` branches (and manually). Every
+# artifact is keyed by the branch and commit it was built from:
 #   images: ghcr.io/apptimizer/opensre-<svc>:<appVersion>-<shortsha>
-#   chart:  oci://ghcr.io/apptimizer/charts/opensre:<version>-apptimizer.g<shortsha>
+#   chart:  oci://ghcr.io/apptimizer/charts/opensre:<version>-<branch>.g<shortsha>
 #
 # The upstream docker-publish.yml (Docker Hub, v* tags) is left untouched.
 # Packages stay private; consumers pull with a ghcr read token.
 
-name: Publish to ghcr (apptimizer)
+name: Publish to ghcr (apptimizer, applift)
 
 on:
   push:
-    branches: [apptimizer]
+    branches: [apptimizer, applift]
     paths:
       - "charts/opensre/**"
       - "config_service/**"
@@ -46,7 +46,7 @@ jobs:
           echo "short=$short" >> "$GITHUB_OUTPUT"
           echo "app_version=${app}-${short}" >> "$GITHUB_OUTPUT"
           # The g prefix keeps the prerelease identifier alphanumeric (semver).
-          echo "chart_version=${ver}-apptimizer.g${short}" >> "$GITHUB_OUTPUT"
+          echo "chart_version=${ver}-${GITHUB_REF_NAME}.g${short}" >> "$GITHUB_OUTPUT"
 
   images:
     needs: meta
