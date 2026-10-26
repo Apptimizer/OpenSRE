@@ -114,7 +114,7 @@ export function QuickStartWizard({ onClose, onRunAgent, onSkip, initialStep = 1,
                 }`}
               />
             ))}
-            <span className="ml-auto text-stone-400 text-xs">
+            <span className="ml-auto mr-8 text-stone-400 text-xs">
               {currentStep} / {TOTAL_STEPS}
             </span>
           </div>
