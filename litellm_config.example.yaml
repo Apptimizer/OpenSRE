@@ -24,6 +24,18 @@ model_list:
       model: nvidia_nim/nvidia/llama-3.1-nemotron-ultra-253b-v1
       api_key: os.environ/NVIDIA_API_KEY
 
+  # Per-agent models: add a named entry per model and set the same name on the
+  # agent in Agents → Model (the picker lists these). Named entries match
+  # before the "*" wildcard.
+  # - model_name: claude-sonnet-4-6
+  #   litellm_params:
+  #     model: anthropic/claude-sonnet-4-6
+  #     api_key: os.environ/ANTHROPIC_API_KEY
+  # - model_name: gpt-5
+  #   litellm_params:
+  #     model: openrouter/openai/gpt-5
+  #     api_key: os.environ/OPENROUTER_API_KEY
+
 litellm_settings:
   drop_params: true
   num_retries: 3

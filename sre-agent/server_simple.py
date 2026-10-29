@@ -692,6 +692,33 @@ async def health():
     }
 
 
+@app.get("/models")
+async def list_models(request: Request):
+    """Model ids the LLM proxy (LiteLLM) exposes, for the per-agent model picker."""
+    if not _extract_team_token(request):
+        raise HTTPException(401, "Unauthorized")
+    from config import llm_proxy_base_url
+
+    base = llm_proxy_base_url()
+    models: List[str] = []
+    if base:
+        try:
+            async with httpx.AsyncClient(timeout=10) as client:
+                resp = await client.get(
+                    f"{base}/v1/models",
+                    headers={
+                        "Authorization": f"Bearer {os.getenv('ANTHROPIC_API_KEY', '')}"
+                    },
+                )
+                resp.raise_for_status()
+                models = sorted(
+                    {m["id"] for m in resp.json().get("data", []) if m.get("id")}
+                )
+        except (httpx.HTTPError, ValueError, KeyError, TypeError) as e:
+            logger.warning("model list from proxy failed: %s", e)
+    return {"success": True, "result": {"models": models, "proxy": bool(base)}}
+
+
 @app.get("/threads/{thread_id}/active")
 async def thread_active(thread_id: str):
     """Whether an in-process background session can accept follow-up messages."""

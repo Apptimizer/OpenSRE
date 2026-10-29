@@ -316,15 +316,25 @@ def resolve_registered_agents(team_config: TeamConfig) -> dict[str, AgentConfig]
     return {name: agents[name] for name in reached}
 
 
-def resolve_model(name: str | None) -> str:
-    """Map a configured model name to an SDK-safe value (Anthropic-only).
+def llm_proxy_base_url() -> str:
+    """ANTHROPIC_BASE_URL when it points at a proxy (e.g. LiteLLM), else ""."""
+    base = os.getenv("ANTHROPIC_BASE_URL", "").strip().rstrip("/")
+    host = httpx.URL(base).host if base else ""
+    return "" if not host or host == "api.anthropic.com" else base
 
-    Aliases and any explicit `claude-*` id pass through; anything else (legacy
-    OpenAI names like `gpt-5.2`, unknown strings, empty) falls back to "inherit"
-    so the agent uses the session/default model and nothing breaks.
+
+def resolve_model(name: str | None) -> str:
+    """Map a configured model name to an SDK-safe value.
+
+    Behind a proxy (LiteLLM) any name passes through: the proxy owns the
+    model list. Direct Anthropic: aliases and `claude-*` ids pass through;
+    anything else (legacy names like `gpt-5.2`, unknown strings, empty) falls
+    back to "inherit" so the agent uses the session/default model.
     """
     if not name:
         return "inherit"
+    if llm_proxy_base_url():
+        return name
     if name in _ANTHROPIC_MODEL_ALIASES:
         return name
     if name.startswith("claude-"):

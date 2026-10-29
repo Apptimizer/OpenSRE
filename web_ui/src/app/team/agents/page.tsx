@@ -91,6 +91,7 @@ export default function AgentSettingsPage() {
   const [saving, setSaving] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState<string | null>(null);
   const [editingAgent, setEditingAgent] = useState<AgentConfig | null>(null);
+  const [proxyModels, setProxyModels] = useState<string[]>([]);
   const [editingRemoteAgent, setEditingRemoteAgent] = useState<RemoteAgentConfig | null>(null);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [showPrompt, setShowPrompt] = useState(false);
@@ -244,6 +245,14 @@ export default function AgentSettingsPage() {
   useEffect(() => {
     loadAgents();
   }, [loadAgents]);
+
+  // Model ids from the LLM proxy (LiteLLM), offered as suggestions in the model field.
+  useEffect(() => {
+    fetch('/api/team/models')
+      .then((r) => (r.ok ? r.json() : { models: [] }))
+      .then((d) => setProxyModels(Array.isArray(d.models) ? d.models : []))
+      .catch(() => setProxyModels([]));
+  }, []);
 
   // Pre-fill team overrides when raw data loads
   useEffect(() => {
@@ -994,7 +1003,8 @@ export default function AgentSettingsPage() {
                       <label className="block text-xs font-medium text-slate-500 mb-1">
                         Model Name
                       </label>
-                      <select
+                      <input
+                        list="agent-models"
                         value={editingAgent.model.name}
                         onChange={(e) =>
                           setEditingAgent({
@@ -1002,13 +1012,17 @@ export default function AgentSettingsPage() {
                             model: { ...editingAgent.model, name: e.target.value },
                           })
                         }
+                        placeholder="inherit"
                         className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700"
-                      >
-                        <option value="inherit">inherit (session default)</option>
-                        <option value="sonnet">sonnet</option>
-                        <option value="opus">opus</option>
-                        <option value="haiku">haiku</option>
-                      </select>
+                      />
+                      <datalist id="agent-models">
+                        {['inherit', 'sonnet', 'opus', 'haiku', ...proxyModels].map((m) => (
+                          <option key={m} value={m} />
+                        ))}
+                      </datalist>
+                      <p className="mt-1 text-xs text-slate-500">
+                        inherit = session default (ANTHROPIC_MODEL). Pick a LiteLLM model or type any name.
+                      </p>
                     </div>
                   </div>
                 </div>
