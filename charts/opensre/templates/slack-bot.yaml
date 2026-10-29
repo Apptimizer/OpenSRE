@@ -36,6 +36,14 @@ spec:
       {{- if .Values.services.slackBot.serviceAccount.name }}
       serviceAccountName: {{ .Values.services.slackBot.serviceAccount.name }}
       {{- end }}
+      {{- with .Values.services.slackBot.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.services.slackBot.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if .Values.global.imagePullSecrets }}
       imagePullSecrets:
 {{ toYaml .Values.global.imagePullSecrets | indent 8 }}
@@ -48,6 +56,11 @@ spec:
         - name: slack-bot
           image: {{ required "services.slackBot.image is required" .Values.services.slackBot.image }}
           imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          {{- $socket := and (not .Values.externalSecrets.enabled) (eq (default "http" .Values.services.slackBot.appMode) "socket") }}
+          {{- if $socket }}
+          # Image bakes deps via `uv sync`; non-root cannot `uv run`.
+          command: ["/app/.venv/bin/python", "app.py"]
+          {{- end }}
           ports:
             - containerPort: {{ .Values.services.slackBot.servicePort | default 3000 }}
               name: http
@@ -58,15 +71,20 @@ spec:
             capabilities:
               drop:
                 - ALL
+          {{- if $socket }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.secrets.slackBotEnv | default "opensre-slack-bot-env" | quote }}
+          {{- end }}
           env:
-            # Slack app mode (http for production)
             - name: SLACK_APP_MODE
-              value: "http"
+              value: {{ ternary "socket" "http" $socket | quote }}
             - name: PORT
               value: {{ .Values.services.slackBot.servicePort | default 3000 | quote }}
             # Agent service URL (for investigations)
             - name: SRE_AGENT_URL
               value: {{ printf "http://opensre-agent.%s.svc.cluster.local:%d" .Values.namespace (.Values.services.agent.servicePort | int) | quote }}
+            {{- if not $socket }}
             # Service-to-service auth for sre-agent /investigate (must match agent's INVESTIGATE_AUTH_TOKEN)
             - name: INVESTIGATE_AUTH_TOKEN
               valueFrom:
@@ -81,12 +99,13 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.externalSecrets.contract.configService.secretName | quote }}
                   key: {{ .Values.externalSecrets.contract.configService.adminTokenKey | quote }}
+            {{- end }}
             # Free trial settings
             - name: FREE_TRIAL_ENABLED
               value: {{ .Values.services.slackBot.freeTrial.enabled | default true | ternary "true" "false" | quote }}
             - name: FREE_TRIAL_DAYS
               value: {{ .Values.services.slackBot.freeTrial.days | default 7 | quote }}
-            {{- if .Values.externalSecrets.contract.slackBot.enabled }}
+            {{- if and (not $socket) .Values.externalSecrets.contract.slackBot.enabled }}
             # Slack OAuth credentials (DEPRECATED: migrate to slack_apps DB table)
             # Kept as fallback when no apps are configured in config service
             - name: SLACK_CLIENT_ID
@@ -111,7 +130,10 @@ spec:
               value: {{ .Values.services.slackBot.baseUrl | quote }}
             {{- end }}
             # Web UI URL for links in Slack messages
-            {{- if .Values.global.webUiUrl }}
+            {{- if $socket }}
+            - name: WEB_UI_PUBLIC_BASE_URL
+              value: {{ default (default "" .Values.global.webUiUrl) .Values.services.webUi.oidc.publicBaseUrl | quote }}
+            {{- else if .Values.global.webUiUrl }}
             - name: WEB_UI_URL
               value: {{ .Values.global.webUiUrl | quote }}
             {{- end }}

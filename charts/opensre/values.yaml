@@ -177,6 +177,7 @@ secrets:
   sreAgentEnv: opensre-sre-agent-env
   webUiEnv: opensre-web-ui-env
   teamsBotEnv: opensre-teams-bot-env
+  slackBotEnv: opensre-slack-bot-env
 
 # Embedded PostgreSQL (Bitnami subchart). Disabled by default; enable in self-hosted profile.
 postgresql:
@@ -496,6 +497,9 @@ services:
   # Slack Bot - Multi-tenant Slack integration
   slackBot:
     enabled: false
+    # socket reads SLACK_BOT_TOKEN and SLACK_APP_TOKEN from secrets.slackBotEnv.
+    # http is the OAuth app and reads client id, client secret, and signing secret.
+    appMode: http
     image: "opensre/slack-bot:v1.0.0"
     replicas: 1
     servicePort: 3000
