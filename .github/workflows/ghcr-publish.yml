@@ -126,3 +126,118 @@ jobs:
           echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login "${REGISTRY}" -u "${{ github.actor }}" --password-stdin
           helm push dist/opensre-${{ needs.meta.outputs.chart_version }}.tgz "oci://${REGISTRY}/${NAMESPACE}/charts"
           echo "- chart \`oci://${REGISTRY}/${NAMESPACE}/charts/opensre:${{ needs.meta.outputs.chart_version }}\`" >> "$GITHUB_STEP_SUMMARY"
+
+  # The host cluster tracks k8s-vcluster-devops main. Rewrite the image
+  # digests and the chart revision there so ArgoCD rolls. Only applift:
+  # a feature-branch publish must not become production.
+  gitops:
+    needs: [meta, images, chart]
+    if: github.ref == 'refs/heads/applift'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require the gitops token
+        env:
+          GITOPS_TOKEN: ${{ secrets.GITOPS_TOKEN }}
+        run: |
+          if [ -z "$GITOPS_TOKEN" ]; then
+            echo "Secret GITOPS_TOKEN is empty."
+            echo "Add a fine-grained PAT with contents:write on Apptimizer/k8s-vcluster-devops as Actions secret GITOPS_TOKEN."
+            exit 1
+          fi
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: actions/checkout@v4
+        with:
+          repository: Apptimizer/k8s-vcluster-devops
+          ref: main
+          token: ${{ secrets.GITOPS_TOKEN }}
+
+      - name: Pin images and chart
+        env:
+          APP_VERSION: ${{ needs.meta.outputs.app_version }}
+          CHART_VERSION: ${{ needs.meta.outputs.chart_version }}
+        run: |
+          python3 << 'PY'
+          import os, re, subprocess
+          from pathlib import Path
+
+          app = os.environ["APP_VERSION"]
+          chart = os.environ["CHART_VERSION"]
+          images = {
+              Path("infrastructure/opensre/platform/values.yaml"): [
+                  "opensre-config-service",
+                  "opensre-sre-agent",
+                  "opensre-web-ui",
+              ],
+              Path("infrastructure/opensre/secrets/manifests/07-slack-bot.yaml"): [
+                  "opensre-slack-bot",
+              ],
+          }
+
+          def digest_for(name: str) -> str:
+              out = subprocess.check_output(
+                  [
+                      "docker", "buildx", "imagetools", "inspect",
+                      f"ghcr.io/apptimizer/{name}:{app}",
+                  ],
+                  text=True,
+              )
+              for line in out.splitlines():
+                  if line.startswith("Digest:"):
+                      digest = line.split()[1]
+                      if re.fullmatch(r"sha256:[0-9a-f]{64}", digest):
+                          return digest
+              raise SystemExit(f"no digest for {name}:\n{out}")
+
+          refs = {
+              name: f"ghcr.io/apptimizer/{name}:{app}@{digest_for(name)}"
+              for names in images.values()
+              for name in names
+          }
+          for path, names in images.items():
+              text = path.read_text()
+              for name in names:
+                  text, n = re.subn(
+                      rf"ghcr\.io/apptimizer/{re.escape(name)}:\S+",
+                      refs[name],
+                      text,
+                  )
+                  if n != 1:
+                      raise SystemExit(f"{path}: expected 1 pin for {name}, found {n}")
+              path.write_text(text)
+
+          app_path = Path("infrastructure/opensre/secrets/manifests/06-platform-application.yaml")
+          text, n = re.subn(
+              r"targetRevision: 1\.2\.8-applift\.g[0-9a-f]+",
+              f"targetRevision: {chart}",
+              app_path.read_text(),
+              count=1,
+          )
+          if n != 1:
+              raise SystemExit(f"chart targetRevision matches: {n}")
+          app_path.write_text(text)
+          PY
+
+      - name: Commit and push
+        env:
+          APP_VERSION: ${{ needs.meta.outputs.app_version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            infrastructure/opensre/platform/values.yaml \
+            infrastructure/opensre/secrets/manifests/06-platform-application.yaml \
+            infrastructure/opensre/secrets/manifests/07-slack-bot.yaml
+          if git diff --cached --quiet; then
+            echo "Pins already match ${APP_VERSION}"
+            exit 0
+          fi
+          git commit -m "Pin OpenSRE to ${APP_VERSION}."
+          git push origin HEAD:main
