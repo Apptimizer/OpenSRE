@@ -18,6 +18,7 @@ on:
       - "config_service/**"
       - "sre-agent/**"
       - "web_ui/**"
+      - "slack-bot/**"
       - ".github/workflows/ghcr-publish.yml"
   workflow_dispatch:
 
@@ -61,6 +62,8 @@ jobs:
             image: opensre-sre-agent
           - context: web_ui
             image: opensre-web-ui
+          - context: slack-bot
+            image: opensre-slack-bot
     steps:
       - uses: actions/checkout@v4
 

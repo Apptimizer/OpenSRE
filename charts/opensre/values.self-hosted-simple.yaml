@@ -66,6 +66,7 @@ services:
 
   slackBot:
     enabled: false
+    appMode: socket
 
   teamsBot:
     enabled: false
