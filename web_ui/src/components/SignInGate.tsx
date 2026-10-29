@@ -19,6 +19,7 @@ interface OrgSSOConfig {
   issuer?: string;
   client_id?: string;
   tenant_id?: string;
+  allowed_domains?: string[] | null;
   scopes?: string;
 }
 
@@ -101,8 +102,11 @@ export function SignInGate({ children }: { children: React.ReactNode }) {
         `&response_type=code` +
         `&scope=${encodeURIComponent(scopes)}` +
         `&state=${encodeURIComponent(state)}` +
-        `&access_type=offline` +
-        `&prompt=select_account`;
+        `&prompt=select_account` +
+        // hd only narrows Google's account picker; config-service enforces the domain.
+        (ssoConfig.allowed_domains?.length === 1
+          ? `&hd=${encodeURIComponent(ssoConfig.allowed_domains[0].trim())}`
+          : '');
     } else if (ssoConfig.provider_type === 'azure') {
       const tenant = ssoConfig.tenant_id || 'common';
       authUrl =

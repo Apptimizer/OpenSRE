@@ -143,6 +143,24 @@ def _resolve_sso_name(
     return None
 
 
+def _google_domain_ok(
+    userinfo: dict[str, Any],
+    id_token_claims: Optional[dict[str, Any]],
+    allowed: list[str],
+) -> bool:
+    """Google Workspace check: verified email and `hd` in the allowed domains.
+
+    `hd` is set only for Workspace accounts, so a consumer Google account
+    registered with a company address fails even though its email matches.
+    """
+    sources = [userinfo] + ([id_token_claims] if id_token_claims else [])
+    verified = next(
+        (s["email_verified"] for s in sources if "email_verified" in s), False
+    )
+    hd = next((s["hd"] for s in sources if isinstance(s.get("hd"), str)), "")
+    return verified in (True, "true") and hd.lower() in allowed
+
+
 def _apply_sso_display_name(token: TeamToken, name: object) -> None:
     """Persist Entra display name when present. Never clear a stored name."""
     if not isinstance(name, str):
@@ -268,6 +286,13 @@ async def exchange_auth_code(
         if email_domain not in allowed:
             raise HTTPException(
                 status_code=403, detail=f"Email domain '{email_domain}' not allowed"
+            )
+        if config.provider_type == "google" and not _google_domain_ok(
+            userinfo, token_claims, allowed
+        ):
+            raise HTTPException(
+                status_code=403,
+                detail="Google account is not a verified Workspace account on an allowed domain",
             )
 
     # Determine role

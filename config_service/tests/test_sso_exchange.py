@@ -1,5 +1,6 @@
 from src.api.routes.sso import (
     _apply_sso_display_name,
+    _google_domain_ok,
     _resolve_sso_email,
     _resolve_sso_name,
     _sso_client_secret,
@@ -145,3 +146,31 @@ def test_apply_sso_display_name_truncates_to_256():
     token = _token()
     _apply_sso_display_name(token, "x" * 300)
     assert token.display_name == "x" * 256
+
+
+def test_google_domain_ok_verified_workspace_account():
+    assert _google_domain_ok(
+        {"email_verified": True, "hd": "applift.co"}, None, ["applift.co"]
+    )
+
+
+def test_google_domain_ok_rejects_consumer_account_without_hd():
+    assert not _google_domain_ok({"email_verified": True}, None, ["applift.co"])
+
+
+def test_google_domain_ok_rejects_other_hd():
+    assert not _google_domain_ok(
+        {"email_verified": True, "hd": "evil.com"}, None, ["applift.co"]
+    )
+
+
+def test_google_domain_ok_rejects_unverified_email():
+    assert not _google_domain_ok(
+        {"email_verified": False, "hd": "applift.co"}, None, ["applift.co"]
+    )
+
+
+def test_google_domain_ok_falls_back_to_id_token_claims():
+    assert _google_domain_ok(
+        {}, {"email_verified": "true", "hd": "Applift.co"}, ["applift.co"]
+    )

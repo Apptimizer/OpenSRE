@@ -138,6 +138,19 @@ SSO sessions share the org’s working team (`default` unless you set `SSO_DEFAU
 
 ---
 
+## Google Workspace instead of Entra
+
+The same flow works with Google. `sso_configs` holds one provider per org, so this replaces Entra.
+
+1. Google Cloud console → **OAuth consent screen** → User type **Internal** (only your Workspace accounts can sign in).
+2. **Credentials** → **Create OAuth client ID** → **Web application**. Redirect URI `https://<web-ui host>/api/auth/callback` (and `http://localhost:3002/api/auth/callback` for local).
+3. Put the client secret in `SSO_CLIENT_SECRET` on config-service.
+4. **Admin → SSO** → **Google Workspace**, paste the client ID, allowed domains `yourcompany.com`, enable, save.
+
+With allowed domains set, config-service also requires Google's `email_verified` and the Workspace `hd` claim to match, so a personal Google account using a company address is refused. A single allowed domain is passed to Google as `hd` to narrow the account picker.
+
+---
+
 ## Smoke
 
 - Incognito window → Microsoft button → Entra login → `/team` dashboard
