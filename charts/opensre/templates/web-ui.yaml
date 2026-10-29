@@ -63,6 +63,10 @@ spec:
               value: {{ printf "http://opensre-agent.%s.svc.cluster.local:%d" .Values.namespace (.Values.services.agent.servicePort | int) | quote }}
             - name: ORCHESTRATOR_URL
               value: {{ printf "http://opensre-orchestrator.%s.svc.cluster.local:%d" .Values.namespace (.Values.services.orchestrator.servicePort | int) | quote }}
+            {{- with .Values.services.webUi.keepAliveTimeoutMs }}
+            - name: KEEP_ALIVE_TIMEOUT
+              value: {{ . | quote }}
+            {{- end }}
             {{- if .Values.services.webUi.raptorApiUrl }}
             - name: RAPTOR_API_URL
               value: {{ .Values.services.webUi.raptorApiUrl | quote }}

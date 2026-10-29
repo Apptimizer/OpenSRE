@@ -725,6 +725,11 @@ services:
     # raptorApiUrl: "http://opensre-knowledge-base.opensre.svc.cluster.local:8000"
     # raptorApiUrl: "http://opensre-ultimate-rag.opensre.svc.cluster.local:8000"
     raptorApiUrl: ""
+    # Node closes idle keep-alive sockets after 5s by default. Behind Envoy/Istio
+    # (upstream idle timeout 1h) a reused socket can be closed mid-request and the
+    # browser gets "upstream connect error ... reset before headers". Keep sockets
+    # open longer than the proxy so the proxy always closes first. "" = Node default.
+    keepAliveTimeoutMs: "3700000"
     resources:
       requests:
         cpu: "100m"

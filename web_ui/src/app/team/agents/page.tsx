@@ -29,7 +29,7 @@ import {
   LayoutTemplate,
   Plus,
 } from 'lucide-react';
-import { apiFetch } from '@/lib/apiClient';
+import { apiFetch, readError } from '@/lib/apiClient';
 import { QuickStartWizard } from '@/components/onboarding/QuickStartWizard';
 import { ContinueOnboardingButton } from '@/components/onboarding/ContinueOnboardingButton';
 import { HelpTip } from '@/components/onboarding/HelpTip';
@@ -530,8 +530,7 @@ export default function AgentSettingsPage() {
         }
         setMessage({ type: 'success', text: 'Agent configuration saved!' });
       } else {
-        const err = await res.json();
-        setMessage({ type: 'error', text: err.error || 'Failed to save' });
+        setMessage({ type: 'error', text: await readError(res, 'Failed to save') });
       }
     } catch (e) {
       const error = e as Error;
@@ -1394,8 +1393,7 @@ export default function AgentSettingsPage() {
                             handleClosePanel();
                             setMessage({ type: 'success', text: 'Remote agent removed!' });
                           } else {
-                            const err = await res.json();
-                            setMessage({ type: 'error', text: err.error || 'Failed to remove' });
+                            setMessage({ type: 'error', text: await readError(res, 'Failed to remove') });
                           }
                         } catch (e) {
                           setMessage({ type: 'error', text: (e as Error).message || 'Failed to remove' });
@@ -1855,8 +1853,7 @@ export default function AgentSettingsPage() {
                           setConnectionTestResult(null);
                           setMessage({ type: 'success', text: 'Remote agent added successfully!' });
                         } else {
-                          const err = await res.json();
-                          setMessage({ type: 'error', text: err.error || 'Failed to add remote agent' });
+                          setMessage({ type: 'error', text: await readError(res, 'Failed to add remote agent') });
                         }
                       } catch (e: any) {
                         setMessage({ type: 'error', text: e.message || 'Failed to add remote agent' });
@@ -2184,8 +2181,7 @@ export default function AgentSettingsPage() {
                         setConnectionTestResult(null);
                         setMessage({ type: 'success', text: 'Remote agent updated successfully!' });
                       } else {
-                        const err = await res.json();
-                        setMessage({ type: 'error', text: err.error || 'Failed to update remote agent' });
+                        setMessage({ type: 'error', text: await readError(res, 'Failed to update remote agent') });
                       }
                     } catch (e: any) {
                       setMessage({ type: 'error', text: e.message || 'Failed to update remote agent' });
